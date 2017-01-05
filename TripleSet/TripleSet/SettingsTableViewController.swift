@@ -18,14 +18,44 @@ class SettingsTableViewController: UITableViewController {
     
     @IBOutlet weak var themeNormalLabel: UILabel!
     
-    @IBOutlet weak var themeChristmansLabel: UILabel!
+    @IBOutlet weak var themeChristmasLabel: UILabel!
     
+    let sections = [SectionTitles.Game, SectionTitles.Sounds, SectionTitles.Themes]
     
+    private struct SectionTitles {
+        static let Game = "Game"
+        static let Sounds = "Sounds"
+        static let Themes = "Themes"
+    }
     
+    let items = [
+        ["Difficulty"],
+        ["Sound Effects", "Music"],
+        ["Normal", "Christmas"]
+    ]
+    
+    private struct Constants {
+        static let Activated = "✔️"
+        static let Deactivated = ""
+    }
+    
+    func selectTheme(theme: Int) {
+        switch theme {
+        case 1:
+            themeNormalLabel.text = Constants.Deactivated
+            themeChristmasLabel.text = Constants.Activated
+            break
+        default:
+            themeNormalLabel.text = Constants.Activated
+            themeChristmasLabel.text = Constants.Deactivated
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        selectTheme(theme: 0)
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -42,19 +72,27 @@ class SettingsTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return self.sections.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return self.items[section].count
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if sections[indexPath.section] == SectionTitles.Themes {
+            selectTheme(theme: indexPath.row)
+        }
+        
     }
 
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
 
-        // Configure the cell...
+         Configure the cell...
 
         return cell
     }
