@@ -25,6 +25,8 @@
 		C97732B41E1E8981008247BA /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97732B31E1E8981008247BA /* MenuViewController.swift */; };
 		C97732B61E1E8991008247BA /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97732B51E1E8991008247BA /* SettingsTableViewController.swift */; };
 		C97732B81E1E906B008247BA /* HighScoresViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97732B71E1E906B008247BA /* HighScoresViewController.swift */; };
+		C9B805561E279536006497B6 /* CardDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B805551E279536006497B6 /* CardDeck.swift */; };
+		C9B805581E27C7CB006497B6 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B805571E27C7CB006497B6 /* Game.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +71,8 @@
 		C97732B31E1E8981008247BA /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		C97732B51E1E8991008247BA /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		C97732B71E1E906B008247BA /* HighScoresViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighScoresViewController.swift; sourceTree = "<group>"; };
+		C9B805551E279536006497B6 /* CardDeck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardDeck.swift; sourceTree = "<group>"; };
+		C9B805571E27C7CB006497B6 /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +166,8 @@
 				C97732B31E1E8981008247BA /* MenuViewController.swift */,
 				C97732B51E1E8991008247BA /* SettingsTableViewController.swift */,
 				C97732B71E1E906B008247BA /* HighScoresViewController.swift */,
+				C9B805551E279536006497B6 /* CardDeck.swift */,
+				C9B805571E27C7CB006497B6 /* Game.swift */,
 			);
 			path = TripleSet;
 			sourceTree = "<group>";
@@ -328,7 +334,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				C97732B21E1E8938008247BA /* GameViewController.swift in Sources */,
+				C9B805581E27C7CB006497B6 /* Game.swift in Sources */,
 				C97732B41E1E8981008247BA /* MenuViewController.swift in Sources */,
+				C9B805561E279536006497B6 /* CardDeck.swift in Sources */,
 				C97732B81E1E906B008247BA /* HighScoresViewController.swift in Sources */,
 				C97732B61E1E8991008247BA /* SettingsTableViewController.swift in Sources */,
 				C97732841E1E88BE008247BA /* ViewController.swift in Sources */,

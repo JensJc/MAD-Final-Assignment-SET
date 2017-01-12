@@ -26,6 +26,8 @@ class GameViewController: UIViewController {
         super.viewDidAppear(animated)
         
         playBackgroundMusic()
+        
+        startGame()
     }
     
     
@@ -57,6 +59,14 @@ class GameViewController: UIViewController {
         }
     }
     
+    func startGame() {
+        
+        let cardDeck = CardDeck()
+        cardDeck.generateCardDeck()
+        
+        let game = Game()
+        game.setTests()
+    }
     
 
     /*
