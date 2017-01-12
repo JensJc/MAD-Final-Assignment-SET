@@ -32,7 +32,7 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
         
      
-        
+        startGame()
         // Do any additional setup after loading the view.
     }
     
@@ -86,6 +86,11 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         } catch {
             print(error.localizedDescription)
         }
+        let cardDeck = CardDeck()
+        cardDeck.generateCardDeck()
+        
+        let game = Game()
+        game.setTests()
     }
     
     // MARK: - Collection view
@@ -117,8 +122,14 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         print("You selected cell #\(indexPath.item)!")
     }
     
-    
-    
+    func startGame() {
+        
+        let cardDeck = CardDeck()
+        cardDeck.generateCardDeck()
+        
+        let game = Game()
+        game.setTests()
+    }
     
     
     
