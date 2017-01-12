@@ -36,6 +36,10 @@ class HighScoresViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if let image = UIImage(named: "normaltheme.png") {
+            self.view.backgroundColor = UIColor(patternImage: image)
+        }
+        
         // Do any additional setup after loading the view.
         todayBestScore = "4500"
         todayBestTime = "04:57"

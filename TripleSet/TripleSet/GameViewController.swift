@@ -7,19 +7,56 @@
 //
 
 import UIKit
+import AVFoundation
 
 class GameViewController: UIViewController {
 
+    var backgroundMusicPlayer: AVAudioPlayer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        if let image = UIImage(named: "normaltheme.png") {
+            self.view.backgroundColor = UIColor(patternImage: image)
+        }
         // Do any additional setup after loading the view.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        playBackgroundMusic()
     }
+    
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if backgroundMusicPlayer != nil {
+            backgroundMusicPlayer?.stop()
+        }
+    }
+    
+    
+    
+    // MARK: - Funcs
+    
+    func playBackgroundMusic() {
+        let url = Bundle.main.url(forResource: "gamemusic", withExtension: "mp3")!
+        
+        do {
+            let player = try AVAudioPlayer(contentsOf: url)
+            
+            backgroundMusicPlayer = player
+            
+            backgroundMusicPlayer?.numberOfLoops = -1
+            backgroundMusicPlayer?.prepareToPlay()
+            backgroundMusicPlayer?.play()
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
     
 
     /*
