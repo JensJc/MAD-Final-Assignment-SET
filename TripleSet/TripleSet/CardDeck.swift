@@ -40,14 +40,18 @@ class CardDeck {
     var colors = [Color.Red, Color.Green, Color.Blue]
     var fillings = [Filling.Line, Filling.Stripes, Filling.Full]
     
-    private var cardDeckAll = [Card]()
+    private static let amountCardsOnTable = 16
+    
+    private var cardDeckAllShuffled = [Card]()
     
     private var cardDeckRemaining = [Card]()
-    private var cardDeckOnTable = [[Card]]()
+    private var cardDeckOnTable = [Card?]()
  
     func generateCardDeck() {
         
+        var allCards = [Card]()
         var combinations = 0
+        
         for i in 0 ..< amounts.count  {
             for j in 0 ..< figures.count {
                 for k in 0 ..< colors.count {
@@ -56,7 +60,7 @@ class CardDeck {
                         let figure = figures[j]
                         let color = colors[k]
                         let filling = fillings[l]
-                        cardDeckAll.append(Card(amount: amount, figure: figure, color: color, filling: filling))
+                        allCards.append(Card(amount: amount, figure: figure, color: color, filling: filling))
                         combinations += 1
                     }
                 }
@@ -64,45 +68,108 @@ class CardDeck {
         }
         
         print(combinations)
-        
-//        printDeck(cardDeckToPrint: alleKaarten)
-        
         print("time to shuffle")
         
-        let shuffledCards = shuffleCards(cardDeck: cardDeckAll)
+        cardDeckAllShuffled = shuffleCards(cardDeck: allCards)
         
-        printDeck(cardDeckToPrint: shuffledCards)
+        printDeck(cardDeckToPrint: cardDeckAllShuffled, allCardDescriptions: true)
+        print("shuffled cards: " + cardDeckAllShuffled.count.description)
         
-        print("shuffled items: " + shuffledCards.count.description)
+        devideCardStacks(cardsToDevide: cardDeckAllShuffled)
+        
+        print("cardDeckOnTable")
+        printDeck(cardDeckToPrint: cardDeckOnTable, allCardDescriptions: true)
+        print("cardDeckRemaining")
+        printDeck(cardDeckToPrint: cardDeckRemaining, allCardDescriptions: true)
+    }
+    
+    func getCardDeckOnTable() -> [Card?] {
+        return cardDeckOnTable
+    }
+    
+    func getCardDeckRemaining() -> [Card] {
+        return cardDeckRemaining
+    }
+    
+    func getCardDeckAll() -> [Card] {
+        return cardDeckAllShuffled
     }
     
     func shuffleCards(cardDeck: [Card]) -> [Card] {
         return GKRandomSource.sharedRandom().arrayByShufflingObjects(in: cardDeck) as! [Card]
     }
     
-    func shuffleCards(cardDeckRemaining: [Card], cardDeckOnTable: [[Card]]) -> [Card] {
+    func shuffleCards(cardDeckRemaining: [Card], cardDeckOnTable: [Card]) -> [Card] {
         
         var allRemainingCards = [Card]()
         allRemainingCards.append(contentsOf: cardDeckRemaining)
-        
-        for row in cardDeckOnTable {
-            for card in row {
-                allRemainingCards.append(card)
-            }
-        }
+        allRemainingCards.append(contentsOf: cardDeckOnTable)
         
         return GKRandomSource.sharedRandom().arrayByShufflingObjects(in: allRemainingCards) as! [Card]
     }
+    
+    func devideCardStacks(cardsToDevide: [Card]) {
+        var count = 0
+        for card in cardsToDevide {
+            if count < CardDeck.amountCardsOnTable {
+                cardDeckOnTable.append(card)
+                
+                // Test for one nil card on position 6:
+//                if count != 5 {cardDeckOnTable.append(card)}
+//                else {cardDeckOnTable.append(nil)}
+            }
+            else {
+                cardDeckRemaining.append(card)
+            }
+            count += 1
+        }
+    }
+    
+    func replaceCardOnTable(cardToReplace: Card) {
+        if let indexOfCardToReplace = cardDeckOnTable.index(where: {$0 === cardToReplace}) {
+            cardDeckOnTable[indexOfCardToReplace] = getNewCardFromRemainingCards()
+        }
+    }
+    
+    func getNewCardFromRemainingCards() -> Card? {
+        if !cardDeckRemaining.isEmpty {
+            return cardDeckRemaining.popLast()
+        }
+        else {
+            return nil
+        }
+    }
+    
+    func selectCard(card: Card) -> Bool {
+        return card.select()
+    }
+    
+    func checkIfSetIsSelected() -> Bool {
+        var selectedCardsCount = 0
+        for card in cardDeckOnTable {
+            if (card?.IsSelected()) != nil {
+                selectedCardsCount += 1
+            }
+        }
+        
+        if selectedCardsCount == 3 { return true }
+        else { return false }
+    }
+    
+    // MARK: - Helper functions
     
     func calculateMaxCombinations(baseNumber base: Int, exponent: Int) -> Int {
         return Int(pow(Double(base),Double(exponent)))
     }
     
     // print functions
-    func printDeck(cardDeckToPrint: [Card]) {
-        for card in cardDeckToPrint {
-            print(card.getDescription())
+    func printDeck(cardDeckToPrint: [Card?], allCardDescriptions: Bool) {
+        if allCardDescriptions {
+            for card in cardDeckToPrint {
+                print(card?.getDescription() ?? "nil >> no card here!")
+            }
         }
+        print("total cards: " + cardDeckToPrint.count.description)
     }
     
 }

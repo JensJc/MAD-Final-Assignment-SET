@@ -16,6 +16,8 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
     var items = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16"]
     var buttonSoundPlayer: AVAudioPlayer?
     
+    var allCards = [Card?]()
+    
     @IBOutlet weak var cardView: UICollectionView! {
         didSet {
             if let image = UIImage(named: "normaltheme.png") {
@@ -30,18 +32,15 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         if let image = UIImage(named: "normaltheme.png") {
             self.view.backgroundColor = UIColor(patternImage: image)
         }
-        
-     
-        startGame()
         // Do any additional setup after loading the view.
+        
+        startGame()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         playBackgroundMusic()
-        
-        startGame()
     }
     
     
@@ -86,11 +85,6 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         } catch {
             print(error.localizedDescription)
         }
-        let cardDeck = CardDeck()
-        cardDeck.generateCardDeck()
-        
-        let game = Game()
-        game.setTests()
     }
     
     // MARK: - Collection view
@@ -105,9 +99,20 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         // get a reference to our storyboard cell
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! GameCollectionViewCell
         
+//        let card = allCards[indexPath.item]
+//        cell.setCard(amount: card.getAmount(), shape: card.getFigure(), filling: card.getFilling(), color: card.getColor())
+        
+        if let card = allCards[indexPath.item] {
+            cell.setCard(card: card)
+        }
+        else {
+            cell.setEmpty()
+        }
+        
         // Use the outlet in our custom class to get a reference to the UILabel in the cell
-        cell.setCard(amount: 3, shape: "cl", filling: "s", color: UIColor.blue)
-        cell.backgroundColor = UIColor.white // make cell more visible in our example project   
+//        cell.setCard(amount: 3, shape: "cl", filling: "s", color: UIColor.blue)
+//        cell.backgroundColor = UIColor.white // make cell more visible in our example project
+        
         
         return cell
     }
@@ -126,6 +131,7 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         let cardDeck = CardDeck()
         cardDeck.generateCardDeck()
+        allCards = cardDeck.getCardDeckOnTable()
         
         let game = Game()
         game.setTests()

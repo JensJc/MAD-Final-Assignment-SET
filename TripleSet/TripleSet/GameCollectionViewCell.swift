@@ -14,9 +14,18 @@ class GameCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageTwo: UIImageView!
     @IBOutlet weak var imageThree: UIImageView!
     
-    func setCard(amount: Int, shape: String, filling: String, color: UIColor) {
+    private struct Constants {
+        static let radius = CGFloat(4)
+    }
+    
+    func setCard(card: Card) {
         self.backgroundColor = UIColor.white
-        self.layer.cornerRadius = 4
+        self.layer.cornerRadius = Constants.radius
+        
+        let amount = card.getAmount()
+        let shape = card.getFigure()
+        let color = card.getColor()
+        let filling = card.getFilling()
         
         var image = UIImage(named: "\(shape)\(filling)")
         
@@ -45,6 +54,11 @@ class GameCollectionViewCell: UICollectionViewCell {
             
         }
         
+    }
+    
+    func setEmpty() {
+        self.backgroundColor = UIColor.gray
+        self.layer.cornerRadius = Constants.radius
     }
     
     

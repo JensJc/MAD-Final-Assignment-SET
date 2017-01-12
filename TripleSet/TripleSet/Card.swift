@@ -15,6 +15,7 @@ class Card {
     private var figure: String = ""
     private var color: UIColor = UIColor.black
     private var filling: String = ""
+    private var selected: Bool = false
     
     init(amount: Int, figure: String, color: UIColor, filling: String) {
         self.amount = amount
@@ -39,8 +40,23 @@ class Card {
         return filling
     }
     
+    func IsSelected() -> Bool {
+        return selected
+    }
+    
     func getDescription() -> String {
         return "\(amount)" + "\(figure)" + color.getText() + "\(filling)"
+    }
+    
+    func select() -> Bool {
+        if selected {
+            selected = false
+        }
+        else {
+            selected = true
+        }
+        
+        return selected
     }
     
 }
