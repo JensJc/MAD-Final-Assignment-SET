@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B1EDDFA1E27C8A500F6CF52 /* GameCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1EDDF91E27C8A500F6CF52 /* GameCollectionViewCell.swift */; };
 		8B7B2F251E2791B300D3CBAF /* gamemusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8B7B2F231E2791B300D3CBAF /* gamemusic.mp3 */; };
 		8B7B2F261E2791B300D3CBAF /* menumusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8B7B2F241E2791B300D3CBAF /* menumusic.mp3 */; };
 		8B7B2F2C1E2791C000D3CBAF /* buttonclick.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8B7B2F281E2791C000D3CBAF /* buttonclick.mp3 */; };
@@ -47,6 +48,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8B1EDDF91E27C8A500F6CF52 /* GameCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameCollectionViewCell.swift; sourceTree = "<group>"; };
 		8B7B2F231E2791B300D3CBAF /* gamemusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gamemusic.mp3; sourceTree = "<group>"; };
 		8B7B2F241E2791B300D3CBAF /* menumusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = menumusic.mp3; sourceTree = "<group>"; };
 		8B7B2F281E2791C000D3CBAF /* buttonclick.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = buttonclick.mp3; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				C977328D1E1E88BE008247BA /* Info.plist */,
 				C97732AF1E1E88E0008247BA /* Card.swift */,
 				C97732B11E1E8938008247BA /* GameViewController.swift */,
+				8B1EDDF91E27C8A500F6CF52 /* GameCollectionViewCell.swift */,
 				C97732B31E1E8981008247BA /* MenuViewController.swift */,
 				C97732B51E1E8991008247BA /* SettingsTableViewController.swift */,
 				C97732B71E1E906B008247BA /* HighScoresViewController.swift */,
@@ -333,6 +336,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B1EDDFA1E27C8A500F6CF52 /* GameCollectionViewCell.swift in Sources */,
 				C97732B21E1E8938008247BA /* GameViewController.swift in Sources */,
 				C9B805581E27C7CB006497B6 /* Game.swift in Sources */,
 				C97732B41E1E8981008247BA /* MenuViewController.swift in Sources */,

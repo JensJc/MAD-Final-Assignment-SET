@@ -99,11 +99,73 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Found sets: " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nO0-LQ-9jG">
+                                <rect key="frame" x="118" y="124" width="138" height="21"/>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="24"/>
+                                <color key="textColor" red="1" green="0.49975961029999999" blue="0.038129629749999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="FCL-PC-GFQ">
+                                <rect key="frame" x="16" y="223" width="343" height="392"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Ek3-ak-sKM">
+                                    <size key="itemSize" width="75" height="100"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="sFI-Ey-vNj" customClass="GameCollectionViewCell" customModule="TripleSet" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="75" height="100"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="75" height="100"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EeE-aT-I0q">
+                                                    <rect key="frame" x="21" y="34" width="33" height="33"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qhv-ng-dsQ">
+                                                    <rect key="frame" x="21" y="67" width="33" height="33"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qi0-Y8-uRa">
+                                                    <rect key="frame" x="21" y="0.0" width="33" height="33"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                            </subviews>
+                                        </view>
+                                        <connections>
+                                            <outlet property="imageOne" destination="Qi0-Y8-uRa" id="qGm-Zh-H1z"/>
+                                            <outlet property="imageThree" destination="Qhv-ng-dsQ" id="Pol-CY-VyB"/>
+                                            <outlet property="imageTwo" destination="EeE-aT-I0q" id="4Ly-69-hNA"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="Y7a-iH-kIk"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="dYf-Z8-h9P"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="nO0-LQ-9jG" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="102" id="5RL-WF-AzQ"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="FCL-PC-GFQ" secondAttribute="bottom" constant="8" id="9M3-SX-Q4l"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="FCL-PC-GFQ" secondAttribute="trailing" id="F56-1n-bhG"/>
+                            <constraint firstItem="FCL-PC-GFQ" firstAttribute="top" secondItem="nO0-LQ-9jG" secondAttribute="bottom" constant="78" id="Ipv-gF-0p9"/>
+                            <constraint firstItem="nO0-LQ-9jG" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="60" id="Nv6-Fa-CWE"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="FCL-PC-GFQ" secondAttribute="leading" id="ulW-f2-W1W"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="nO0-LQ-9jG" secondAttribute="trailing" constant="103" id="ysq-VS-pGt"/>
+                        </constraints>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="GAME" id="CwL-CN-HuZ" userLabel="GAME"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="cardView" destination="FCL-PC-GFQ" id="t9B-2Y-G7L"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
