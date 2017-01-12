@@ -40,6 +40,8 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         super.viewDidAppear(animated)
         
         playBackgroundMusic()
+        
+        startGame()
     }
     
     
