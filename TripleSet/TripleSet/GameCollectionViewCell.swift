@@ -86,6 +86,8 @@ class GameCollectionViewCell: UICollectionViewCell {
     func setEmpty() {
         self.backgroundColor = BackgroundColor.Empty
         self.layer.cornerRadius = Constants.radius
+        
+        clearAll()
     }
     
     

@@ -22,6 +22,8 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
     var cardDeckOnTable = [Card?]()
     var selectedCardIndexes = [IndexPath]()
     
+    var foundSets: Int = 0
+    
     var soundEffectSettingOn = false
     var musicSettingOn = false
     
@@ -170,6 +172,7 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         cardDeckOnTable = cardDeck.getCardDeckOnTable()
 
         game.setTests()
+        refreshInfo()
     }
     
     func tryToCheckForSet(_ collectionView: UICollectionView) {
@@ -183,6 +186,12 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
                 if soundEffectSettingOn { playSetFoundSound() }
                 replaceCards(for: collectionView)
                 collectionView.reloadData()
+                foundSets += 1
+                refreshInfo()
+                
+                if game.isGameOver(cardDeck: cardDeck) {
+                    print(">>> GAME OVER!! <<<")
+                }
             }
             else {
                 // deselect items
@@ -224,6 +233,11 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         cardDeckOnTable = cardDeck.getCardDeckOnTable()
     }
     
+    func refreshInfo() {
+        print("Possibilities to make a set: \(game.getPossibilitiesToMakeSet(cardDeck: cardDeckOnTable))")
+        print("Cards in deck: \(cardDeck.getCardDeckRemainingCount())")
+        print("Found sets: \(foundSets)")
+    }
     
     
     /*

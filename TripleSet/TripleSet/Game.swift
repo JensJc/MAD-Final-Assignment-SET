@@ -11,6 +11,16 @@ import UIKit
 
 class Game {
     
+    func isGameOver(cardDeck: CardDeck) -> Bool {
+        let openCards = cardDeck.getCardDeckOnTable()
+        if cardDeck.getCardDeckRemainingCount() == 0 && getPossibilitiesToMakeSet(cardDeck: openCards) == 0 {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    
     func checkSet(card1: Card, card2: Card, card3: Card) -> Bool {
         let sameAmounts = checkForSameAmount(card1: card1, card2: card2, card3: card3)
         let sameFigures = checkForSameFigure(card1: card1, card2: card2, card3: card3)
@@ -180,6 +190,57 @@ class Game {
     
     func checkForAllDifferentFillings(card1: Card, card2: Card, card3: Card) -> Bool {
         if card1.getFilling() != card2.getFilling() && card2.getFilling() != card3.getFilling() && card1.getFilling() != card3.getFilling() {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    
+    func getPossibilitiesToMakeSet(cardDeck: [Card?]) -> Int {
+        var possibleSetsFound = 0
+        
+        for i in 0 ..< cardDeck.count-2  {
+            for j in 0 ..< cardDeck.count-1 {
+                for k in 0 ..< cardDeck.count {
+                    let card1 = cardDeck[i]
+                    let card2 = cardDeck[j]
+                    let card3 = cardDeck[k]
+                    
+                    if !hasEmptyCards(card1: card1, card2: card2, card3: card3) {
+                        if checkSet(card1: card1!, card2: card2!, card3: card3!) {
+                            if possibleSetsFound < 3 {
+                                possibleCombination[0] = card1!
+                                possibleCombination[1] = card2!
+                                possibleCombination[2] = card3!
+                            }
+                            possibleSetsFound += 1
+                        }
+                    }
+                }
+            }
+        }
+        
+        if possibleSetsFound == 0 {
+            possibleCombination[0] = nil
+            possibleCombination[1] = nil
+            possibleCombination[2] = nil
+        }
+        
+//        print("Possibilities to make a set: \(possibleSetsFound)")
+        print("Possible combination: \(possibleCombination[0]?.getDescription()) - \(possibleCombination[1]?.getDescription()) - \(possibleCombination[2]?.getDescription())")
+        
+        return possibleSetsFound
+    }
+    
+    var possibleCombination: [Card?] = [
+        nil,
+        nil,
+        nil
+    ]
+    
+    func hasEmptyCards(card1: Card?, card2: Card?, card3: Card?) -> Bool {
+        if card1 == nil || card2 == nil || card3 == nil {
             return true
         }
         else {

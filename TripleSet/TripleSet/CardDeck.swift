@@ -46,6 +46,8 @@ class CardDeck {
     
     private var cardDeckRemaining = [Card]()
     private var cardDeckOnTable = [Card?]()
+    
+    // MARK: - CardDeck functions
  
     func generateCardDeck() {
         
@@ -91,6 +93,10 @@ class CardDeck {
         return cardDeckRemaining
     }
     
+    func getCardDeckRemainingCount() -> Int {
+        return cardDeckRemaining.count
+    }
+    
     func getCardDeckAll() -> [Card] {
         return cardDeckAllShuffled
     }
@@ -120,6 +126,9 @@ class CardDeck {
             }
             else {
                 cardDeckRemaining.append(card)
+                
+                // Test to have a quick game to test GameOver
+//                if count < 20 { cardDeckRemaining.append(card) }
             }
             count += 1
         }
@@ -143,6 +152,8 @@ class CardDeck {
     func selectCard(card: Card) -> Bool {
         return card.select()
     }
+    
+    // MARK: - Set functions
     
     func checkIfSetIsSelected() -> Bool {
         var selectedCardsCount = 0
