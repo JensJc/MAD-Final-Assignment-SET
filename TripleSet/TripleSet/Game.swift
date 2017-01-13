@@ -11,6 +11,25 @@ import UIKit
 
 class Game {
     
+    struct Score {
+        static let setFound = 500
+        static let hintUsed = -250
+    }
+    
+    var score: Int = 0
+    
+    func scoreSetFound() {
+        score += Score.setFound
+    }
+    
+    func scoreHintUsed() {
+        score += Score.hintUsed
+    }
+    
+    func getScore() -> Int {
+        return score
+    }
+    
     func isGameOver(cardDeck: CardDeck) -> Bool {
         let openCards = cardDeck.getCardDeckOnTable()
         if cardDeck.getCardDeckRemainingCount() == 0 && getPossibilitiesToMakeSet(cardDeck: openCards) == 0 {
@@ -237,6 +256,12 @@ class Game {
         nil,
         nil,
         nil
+    ]
+    
+    var possibleCombinationIndexes: [Int] = [
+        99,
+        99,
+        99
     ]
     
     func hasEmptyCards(card1: Card?, card2: Card?, card3: Card?) -> Bool {

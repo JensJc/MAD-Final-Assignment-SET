@@ -105,6 +105,20 @@ class CardDeck {
         return GKRandomSource.sharedRandom().arrayByShufflingObjects(in: cardDeck) as! [Card]
     }
     
+    func shuffleAllCards() {
+        var allRemainingCards = [Card]()
+        allRemainingCards.append(contentsOf: cardDeckRemaining)
+        
+        for i in 0 ..< cardDeckOnTable.count {
+            if let card = cardDeckOnTable[i] {
+                allRemainingCards.append(card)
+            }
+        }
+        
+        let cardsToDevide = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: allRemainingCards) as! [Card]
+        devideCardStacks(cardsToDevide: cardsToDevide)
+    }
+    
     func shuffleCards(cardDeckRemaining: [Card], cardDeckOnTable: [Card]) -> [Card] {
         
         var allRemainingCards = [Card]()
@@ -115,6 +129,10 @@ class CardDeck {
     }
     
     func devideCardStacks(cardsToDevide: [Card]) {
+        cardDeckOnTable.removeAll()
+        cardDeckRemaining.removeAll()
+        
+        
         var count = 0
         for card in cardsToDevide {
             if count < CardDeck.amountCardsOnTable {

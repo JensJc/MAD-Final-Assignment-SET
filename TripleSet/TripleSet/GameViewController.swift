@@ -22,7 +22,10 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
     var cardDeckOnTable = [Card?]()
     var selectedCardIndexes = [IndexPath]()
     
+    var score: Int = 0
     var foundSets: Int = 0
+    var possibleSets: Int = 0
+    var cardsInDeck: Int = 0
     
     var soundEffectSettingOn = false
     var musicSettingOn = false
@@ -33,10 +36,77 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         static let WrongSet = "wrongset"
     }
     
+    private struct LabelConstants {
+        static let score = "Score:"
+        static let foundSets = "Found sets:"
+        static let possibleSets = "Possible Sets:"
+        static let cardsInDeck = "Cards in deck:"
+        
+    }
+    
+    @IBOutlet weak var scoreLabel: UILabel! {
+        didSet { scoreLabel.text = LabelConstants.score }
+    }
+    @IBOutlet weak var foundSetsLabel: UILabel! {
+        didSet { foundSetsLabel.text = LabelConstants.foundSets }
+    }
+    @IBOutlet weak var possibleSetsLabel: UILabel! {
+        didSet { possibleSetsLabel.text = LabelConstants.possibleSets }
+    }
+    @IBOutlet weak var cardsInDeckLabel: UILabel! {
+        didSet { cardsInDeckLabel.text = LabelConstants.cardsInDeck }
+    }
+    
     @IBOutlet weak var cardView: UICollectionView! {
         didSet {
             if let image = UIImage(named: "normaltheme.png") {
                 cardView.backgroundColor = UIColor(patternImage: image)
+            }
+        }
+    }
+    
+    @IBAction func shakeButtonClicked(_ sender: UIButton) {
+        deselectAllSelectedCells()
+        
+        cardDeck.shuffleAllCards()
+        cardDeckOnTable = cardDeck.getCardDeckOnTable()
+        cardView.reloadData()
+        
+        refreshInfo()
+    }
+    
+    @IBAction func hintButtonClicked(_ sender: UIButton) {
+        deselectAllSelectedCells()
+        
+        let possibleSet = game.possibleCombination
+        
+        var possibleSetIndexes = [Int]()
+        for i in 0 ..< possibleSet.count {
+            if let card = possibleSet[i] {
+                possibleSetIndexes.append(cardDeckOnTable.index(where: {$0 === card})!)
+            }
+        }
+        
+        if possibleSetIndexes.count == 3 {
+            selectCardByIndex(index: possibleSetIndexes[0])
+            selectCardByIndex(index: possibleSetIndexes[1])
+        }
+        
+        game.scoreHintUsed()
+        refreshScore()
+    }
+    
+    func selectCardByIndex(index: Int) {
+        var indexPath = IndexPath(item: index, section: 0)
+        let cellToSelect:GameCollectionViewCell = cardView.cellForItem(at: indexPath)! as! GameCollectionViewCell
+        if let card = cardDeckOnTable[indexPath.item] {
+            cellToSelect.selectCard(card: card)
+            
+            if let currentSelectedCardIndex = selectedCardIndexes.index(where: {$0 == indexPath}) {
+                selectedCardIndexes.remove(at: currentSelectedCardIndex)
+            }
+            else {
+                selectedCardIndexes.append(indexPath)
             }
         }
     }
@@ -182,11 +252,14 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
             print("setFound: \(setFound)")
             
             if setFound {
-                // replace Cards
                 if soundEffectSettingOn { playSetFoundSound() }
-                replaceCards(for: collectionView)
+                
+                replaceCards()
                 collectionView.reloadData()
+                
                 foundSets += 1
+                game.scoreSetFound()
+                
                 refreshInfo()
                 
                 if game.isGameOver(cardDeck: cardDeck) {
@@ -196,7 +269,7 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
             else {
                 // deselect items
                 if soundEffectSettingOn { playWrongSetSound() }
-                deselectCurrentCells(for: collectionView)
+                deselectAllSelectedCells()
             }
         }
     }
@@ -209,9 +282,9 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         return game.checkSet(card1: card1!, card2: card2!, card3: card3!)
     }
     
-    func deselectCurrentCells(for collectionView: UICollectionView) {
+    func deselectAllSelectedCells() {
         for indexpath in selectedCardIndexes {
-            let selectedCell:GameCollectionViewCell = collectionView.cellForItem(at: indexpath)! as! GameCollectionViewCell
+            let selectedCell:GameCollectionViewCell = cardView.cellForItem(at: indexpath)! as! GameCollectionViewCell
             if let card = cardDeckOnTable[indexpath.item] {
                 selectedCell.selectCard(card: card)
             }
@@ -219,12 +292,12 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         selectedCardIndexes.removeAll()
     }
     
-    func replaceCards(for collectionView: UICollectionView) {
+    func replaceCards() {
         let card1 = cardDeckOnTable[selectedCardIndexes[0].item]
         let card2 = cardDeckOnTable[selectedCardIndexes[1].item]
         let card3 = cardDeckOnTable[selectedCardIndexes[2].item]
         
-        deselectCurrentCells(for: collectionView)
+        deselectAllSelectedCells()
         
         cardDeck.replaceCardOnTable(cardToReplace: card1!)
         cardDeck.replaceCardOnTable(cardToReplace: card2!)
@@ -234,9 +307,25 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     
     func refreshInfo() {
-        print("Possibilities to make a set: \(game.getPossibilitiesToMakeSet(cardDeck: cardDeckOnTable))")
-        print("Cards in deck: \(cardDeck.getCardDeckRemainingCount())")
+        possibleSets = game.getPossibilitiesToMakeSet(cardDeck: cardDeckOnTable)
+        cardsInDeck = cardDeck.getCardDeckRemainingCount()
+        refreshScore()
+        
+        print("Possibilities to make a set: \(possibleSets)")
+        print("Cards in deck: \(cardsInDeck)")
         print("Found sets: \(foundSets)")
+        
+        foundSetsLabel.text = "\(LabelConstants.foundSets) \(foundSets)"
+        possibleSetsLabel.text = "\(LabelConstants.possibleSets) \(possibleSets)"
+        cardsInDeckLabel.text = "\(LabelConstants.cardsInDeck) \(cardsInDeck)"
+    }
+    
+    func refreshScore() {
+        score = game.getScore()
+        
+        print("Score: \(game.getScore())")
+        
+        scoreLabel.text = "\(LabelConstants.score) \(score)"
     }
     
     
