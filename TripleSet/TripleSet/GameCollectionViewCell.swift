@@ -18,8 +18,14 @@ class GameCollectionViewCell: UICollectionViewCell {
         static let radius = CGFloat(4)
     }
     
+    private struct BackgroundColor {
+        static let Deselected = UIColor.white
+        static let Selected = UIColor.yellow
+        static let Empty = UIColor.gray
+    }
+    
     func setCard(card: Card) {
-        self.backgroundColor = UIColor.white
+        self.backgroundColor = BackgroundColor.Deselected
         self.layer.cornerRadius = Constants.radius
         
         let amount = card.getAmount()
@@ -30,6 +36,8 @@ class GameCollectionViewCell: UICollectionViewCell {
         var image = UIImage(named: "\(shape)\(filling)")
         
         image = image?.withRenderingMode(.alwaysTemplate)
+        
+        clearAll()
         
         switch amount{
         case 1:
@@ -56,8 +64,27 @@ class GameCollectionViewCell: UICollectionViewCell {
         
     }
     
+    func clearAll() {
+        imageOne.image = nil
+        imageOne.tintColor = UIColor.clear
+        imageTwo.image = nil
+        imageTwo.tintColor = UIColor.clear
+        imageThree.image = nil
+        imageThree.tintColor = UIColor.clear
+    }
+    
+    func selectCard(card: Card) {
+        if card.select() {
+            self.backgroundColor = BackgroundColor.Selected
+        }
+        else {
+            self.backgroundColor = BackgroundColor.Deselected
+        }
+        self.layer.cornerRadius = Constants.radius
+    }
+    
     func setEmpty() {
-        self.backgroundColor = UIColor.gray
+        self.backgroundColor = BackgroundColor.Empty
         self.layer.cornerRadius = Constants.radius
     }
     

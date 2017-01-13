@@ -18,6 +18,9 @@ class MenuViewController: UIViewController {
     var backgroundMusicPlayer: AVAudioPlayer?
     var buttonSoundPlayer: AVAudioPlayer?
     
+    var soundEffectSettingOn = false
+    var musicSettingOn = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,7 +39,11 @@ class MenuViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         logoAppear()
-        playBackgroundMusic()
+        
+        soundEffectSettingOn = UserDefaults.sharedInstance.soundEffects
+        musicSettingOn = UserDefaults.sharedInstance.music
+        
+        if musicSettingOn { playBackgroundMusic() }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -48,13 +55,13 @@ class MenuViewController: UIViewController {
     }
     
     @IBAction func playClick(_ sender: Any) {
-        buttonClick()
+        if soundEffectSettingOn { buttonClickSound() }
     }
     @IBAction func highscoresClick(_ sender: Any) {
-        buttonClick()
+        if soundEffectSettingOn { buttonClickSound() }
     }
     @IBAction func settingsClick(_ sender: Any) {
-        buttonClick()
+        if soundEffectSettingOn { buttonClickSound() }
     }
     
     
@@ -85,7 +92,7 @@ class MenuViewController: UIViewController {
         }
     }
     
-    func buttonClick() {
+    func buttonClickSound() {
         let url = Bundle.main.url(forResource: "buttonclick", withExtension: "mp3")!
         
         do {

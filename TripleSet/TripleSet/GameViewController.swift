@@ -16,7 +16,20 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
     var items = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16"]
     var buttonSoundPlayer: AVAudioPlayer?
     
-    var allCards = [Card?]()
+    let game: Game = Game()
+    let cardDeck: CardDeck = CardDeck()
+    
+    var cardDeckOnTable = [Card?]()
+    var selectedCardIndexes = [IndexPath]()
+    
+    var soundEffectSettingOn = false
+    var musicSettingOn = false
+    
+    private struct Sounds {
+        static let CardClick = "cardclick"
+        static let SetFound = "setfound"
+        static let WrongSet = "wrongset"
+    }
     
     @IBOutlet weak var cardView: UICollectionView! {
         didSet {
@@ -34,13 +47,16 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
         // Do any additional setup after loading the view.
         
+        soundEffectSettingOn = UserDefaults.sharedInstance.soundEffects
+        musicSettingOn = UserDefaults.sharedInstance.music
+        
         startGame()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        playBackgroundMusic()
+        if musicSettingOn { playBackgroundMusic() }
     }
     
     
@@ -72,8 +88,20 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
     }
     
-    func cardClickSound() {
-        let url = Bundle.main.url(forResource: "cardclick", withExtension: "mp3")!
+    func playCardClickSound() {
+        playSound(soundDescription: Sounds.CardClick)
+    }
+    
+    func playSetFoundSound() {
+        playSound(soundDescription: Sounds.SetFound)
+    }
+    
+    func playWrongSetSound() {
+        playSound(soundDescription: Sounds.WrongSet)
+    }
+    
+    func playSound(soundDescription: String) {
+        let url = Bundle.main.url(forResource: soundDescription, withExtension: "mp3")!
         
         do {
             let player = try AVAudioPlayer(contentsOf: url)
@@ -99,10 +127,7 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         // get a reference to our storyboard cell
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! GameCollectionViewCell
         
-//        let card = allCards[indexPath.item]
-//        cell.setCard(amount: card.getAmount(), shape: card.getFigure(), filling: card.getFilling(), color: card.getColor())
-        
-        if let card = allCards[indexPath.item] {
+        if let card = cardDeckOnTable[indexPath.item] {
             cell.setCard(card: card)
         }
         else {
@@ -110,9 +135,6 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
         
         // Use the outlet in our custom class to get a reference to the UILabel in the cell
-//        cell.setCard(amount: 3, shape: "cl", filling: "s", color: UIColor.blue)
-//        cell.backgroundColor = UIColor.white // make cell more visible in our example project
-        
         
         return cell
     }
@@ -121,20 +143,85 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // handle tap events
-        cardClickSound()
-        
+        if soundEffectSettingOn { playCardClickSound() }
+
+        let selectedCell:GameCollectionViewCell = collectionView.cellForItem(at: indexPath)! as! GameCollectionViewCell
+        if let card = cardDeckOnTable[indexPath.item] {
+            selectedCell.selectCard(card: card)
+            
+            if let currentSelectedCardIndex = selectedCardIndexes.index(where: {$0 == indexPath}) {
+                selectedCardIndexes.remove(at: currentSelectedCardIndex)
+            }
+            else {
+                selectedCardIndexes.append(indexPath)
+            }
+            
+            tryToCheckForSet(collectionView)
+
+            print("You selected card \(card.getDescription())")
+        }
         
         print("You selected cell #\(indexPath.item)!")
     }
     
     func startGame() {
         
-        let cardDeck = CardDeck()
         cardDeck.generateCardDeck()
-        allCards = cardDeck.getCardDeckOnTable()
-        
-        let game = Game()
+        cardDeckOnTable = cardDeck.getCardDeckOnTable()
+
         game.setTests()
+    }
+    
+    func tryToCheckForSet(_ collectionView: UICollectionView) {
+        if selectedCardIndexes.count == 3 {
+
+            let setFound = checkForSet()
+            print("setFound: \(setFound)")
+            
+            if setFound {
+                // replace Cards
+                if soundEffectSettingOn { playSetFoundSound() }
+                replaceCards(for: collectionView)
+                collectionView.reloadData()
+            }
+            else {
+                // deselect items
+                if soundEffectSettingOn { playWrongSetSound() }
+                deselectCurrentCells(for: collectionView)
+            }
+        }
+    }
+    
+    func checkForSet() -> Bool {
+        let card1 = cardDeckOnTable[selectedCardIndexes[0].item]
+        let card2 = cardDeckOnTable[selectedCardIndexes[1].item]
+        let card3 = cardDeckOnTable[selectedCardIndexes[2].item]
+        
+        return game.checkSet(card1: card1!, card2: card2!, card3: card3!)
+    }
+    
+    func deselectCurrentCells(for collectionView: UICollectionView) {
+        for indexpath in selectedCardIndexes {
+            let selectedCell:GameCollectionViewCell = collectionView.cellForItem(at: indexpath)! as! GameCollectionViewCell
+            if let card = cardDeckOnTable[indexpath.item] {
+                selectedCell.selectCard(card: card)
+            }
+        }
+        selectedCardIndexes.removeAll()
+    }
+    
+    func replaceCards(for collectionView: UICollectionView) {
+        let card1 = cardDeckOnTable[selectedCardIndexes[0].item]
+        let card2 = cardDeckOnTable[selectedCardIndexes[1].item]
+        let card3 = cardDeckOnTable[selectedCardIndexes[2].item]
+        
+        deselectCurrentCells(for: collectionView)
+        
+        cardDeck.replaceCardOnTable(cardToReplace: card1!)
+        cardDeck.replaceCardOnTable(cardToReplace: card2!)
+        cardDeck.replaceCardOnTable(cardToReplace: card3!)
+        
+        cardDeckOnTable = cardDeck.getCardDeckOnTable()
     }
     
     

@@ -8,18 +8,19 @@
 
 import UIKit
 
+struct Difficulty {
+    static let Easy = 0
+    static let Normal = 1
+    static let Expert = 2
+}
+
+struct Themes {
+    static let Normal = 0
+    static let Christmas = 1
+}
+
 class SettingsTableViewController: UITableViewController {
-    
-    @IBOutlet weak var difficultySetting: UISegmentedControl!
-    
-    @IBOutlet weak var soundEffectsSwitch: UISwitch!
-    
-    @IBOutlet weak var musicSwitch: UISwitch!
-    
-    @IBOutlet weak var themeNormalLabel: UILabel!
-    
-    @IBOutlet weak var themeChristmasLabel: UILabel!
-    
+    // MARK: - Class Variables
     let sections = [SectionTitles.Game, SectionTitles.Sounds, SectionTitles.Themes]
     
     private struct SectionTitles {
@@ -39,23 +40,73 @@ class SettingsTableViewController: UITableViewController {
         static let Deactivated = ""
     }
     
+    
+    // MARK: - @IBOutlets
+    @IBOutlet weak var difficultySetting: UISegmentedControl! {
+        didSet {
+            difficultySetting.selectedSegmentIndex = UserDefaults.sharedInstance.difficulty
+        }
+    }
+    
+    @IBOutlet weak var soundEffectsSwitch: UISwitch! {
+        didSet {
+            soundEffectsSwitch.isOn = UserDefaults.sharedInstance.soundEffects
+        }
+    }
+    
+    @IBOutlet weak var musicSwitch: UISwitch! {
+        didSet {
+            musicSwitch.isOn = UserDefaults.sharedInstance.music
+        }
+    }
+    
+    @IBOutlet weak var themeNormalLabel: UILabel!
+    
+    @IBOutlet weak var themeChristmasLabel: UILabel!
+    
+    
+    // MARK: - @IBActions
+    @IBAction func difficultySegmentedControlValueChanged(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case Difficulty.Easy:
+            UserDefaults.sharedInstance.difficulty = Difficulty.Easy
+        case Difficulty.Normal:
+            UserDefaults.sharedInstance.difficulty = Difficulty.Normal
+        case Difficulty.Expert:
+            UserDefaults.sharedInstance.difficulty = Difficulty.Expert
+        default:
+            UserDefaults.sharedInstance.difficulty = Difficulty.Normal
+        }
+    }
+    
+    @IBAction func soundEffectsControlValueChanged(_ sender: UISwitch) {
+        UserDefaults.sharedInstance.soundEffects = sender.isOn
+    }
+    
+    @IBAction func musicControlValueChanged(_ sender: UISwitch) {
+        UserDefaults.sharedInstance.music = sender.isOn
+    }
+    
+    // MARK: - Functions
     func selectTheme(theme: Int) {
         switch theme {
-        case 1:
+        case Themes.Normal:
+            themeNormalLabel.text = Constants.Activated
+            themeChristmasLabel.text = Constants.Deactivated
+        case Themes.Christmas:
             themeNormalLabel.text = Constants.Deactivated
             themeChristmasLabel.text = Constants.Activated
             break
-        default:
-            themeNormalLabel.text = Constants.Activated
-            themeChristmasLabel.text = Constants.Deactivated
+        default: break
         }
     }
-
+    
+    // MARK: - Overide Functions
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        selectTheme(theme: 0)
-           
+        selectTheme(theme: UserDefaults.sharedInstance.theme)
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -84,6 +135,7 @@ class SettingsTableViewController: UITableViewController {
         
         if sections[indexPath.section] == SectionTitles.Themes {
             selectTheme(theme: indexPath.row)
+            UserDefaults.sharedInstance.theme = indexPath.row
         }
         
     }
