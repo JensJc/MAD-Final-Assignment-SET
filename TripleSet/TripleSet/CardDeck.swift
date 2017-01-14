@@ -152,9 +152,14 @@ class CardDeck {
         }
     }
     
-    func replaceCardOnTable(cardToReplace: Card) {
+    func replaceCardOnTable(cardToReplace: Card) -> Card? {
         if let indexOfCardToReplace = cardDeckOnTable.index(where: {$0 === cardToReplace}) {
-            cardDeckOnTable[indexOfCardToReplace] = getNewCardFromRemainingCards()
+            let newCard = getNewCardFromRemainingCards()
+            cardDeckOnTable[indexOfCardToReplace] = newCard
+            return newCard
+        }
+        else {
+            return nil
         }
     }
     

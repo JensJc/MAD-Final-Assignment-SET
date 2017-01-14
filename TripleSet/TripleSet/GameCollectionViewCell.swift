@@ -75,10 +75,10 @@ class GameCollectionViewCell: UICollectionViewCell {
     
     func selectCard(card: Card) {
         if card.select() {
-            self.backgroundColor = BackgroundColor.Selected
+            UIView.animate(withDuration: 2, animations: { self.backgroundColor = BackgroundColor.Selected })
         }
         else {
-            self.backgroundColor = BackgroundColor.Deselected
+            UIView.animate(withDuration: 1, animations: { self.backgroundColor = BackgroundColor.Deselected })
         }
         self.layer.cornerRadius = Constants.radius
     }

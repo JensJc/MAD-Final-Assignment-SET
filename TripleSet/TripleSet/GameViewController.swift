@@ -219,6 +219,10 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
 
         let selectedCell:GameCollectionViewCell = collectionView.cellForItem(at: indexPath)! as! GameCollectionViewCell
         if let card = cardDeckOnTable[indexPath.item] {
+            
+            animationSelectCell(cell: selectedCell)
+//            animationFlipCell(cell: selectedCell)
+            
             selectedCell.selectCard(card: card)
             
             if let currentSelectedCardIndex = selectedCardIndexes.index(where: {$0 == indexPath}) {
@@ -255,7 +259,6 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
                 if soundEffectSettingOn { playSetFoundSound() }
                 
                 replaceCards()
-                collectionView.reloadData()
                 
                 foundSets += 1
                 game.scoreSetFound()
@@ -297,13 +300,19 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         let card2 = cardDeckOnTable[selectedCardIndexes[1].item]
         let card3 = cardDeckOnTable[selectedCardIndexes[2].item]
         
-        deselectAllSelectedCells()
+        let cell1:GameCollectionViewCell = cardView.cellForItem(at: selectedCardIndexes[0])! as! GameCollectionViewCell
+        let cell2:GameCollectionViewCell = cardView.cellForItem(at: selectedCardIndexes[1])! as! GameCollectionViewCell
+        let cell3:GameCollectionViewCell = cardView.cellForItem(at: selectedCardIndexes[2])! as! GameCollectionViewCell
         
-        cardDeck.replaceCardOnTable(cardToReplace: card1!)
-        cardDeck.replaceCardOnTable(cardToReplace: card2!)
-        cardDeck.replaceCardOnTable(cardToReplace: card3!)
+        cardDeckOnTable[selectedCardIndexes[0].item] = cardDeck.replaceCardOnTable(cardToReplace: card1!)
+        cardDeckOnTable[selectedCardIndexes[1].item] = cardDeck.replaceCardOnTable(cardToReplace: card2!)
+        cardDeckOnTable[selectedCardIndexes[2].item] = cardDeck.replaceCardOnTable(cardToReplace: card3!)
         
-        cardDeckOnTable = cardDeck.getCardDeckOnTable()
+        animationFlipCell(cell: cell1, indexPath: selectedCardIndexes[0])
+        animationFlipCell(cell: cell2, indexPath: selectedCardIndexes[1])
+        animationFlipCell(cell: cell3, indexPath: selectedCardIndexes[2])
+        
+        selectedCardIndexes.removeAll()
     }
     
     func refreshInfo() {
@@ -326,6 +335,64 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         print("Score: \(game.getScore())")
         
         scoreLabel.text = "\(LabelConstants.score) \(score)"
+    }
+    
+    // MARK: - Animations
+    
+    func animationSelectCell(cell: GameCollectionViewCell) {
+        animationWobbleCell(cell: cell)
+        
+        let view = cell.contentView
+        view.layer.opacity = 0.1
+        UIView.animate(withDuration: 1.4, animations: { view.layer.opacity = 1 })
+    }
+    
+    func animationWobbleCell(cell: GameCollectionViewCell) {
+        let duration = 0.1
+        let shiftFromCenter = CGFloat(2)
+        
+        UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.5, options: [], animations: {
+            cell.center.x += shiftFromCenter
+        }, completion: nil)
+        UIView.animate(withDuration: duration, delay: duration, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.5, options: [], animations: {
+            cell.center.x -= 2*shiftFromCenter
+        }, completion: nil)
+        UIView.animate(withDuration: duration, delay: 2*duration, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.5, options: [], animations: {
+            cell.center.x += 2*shiftFromCenter
+        }, completion: nil)
+        UIView.animate(withDuration: duration, delay: 3*duration, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.5, options: [], animations: {
+            cell.center.x -= 2*shiftFromCenter
+        }, completion: nil)
+        UIView.animate(withDuration: duration, delay: 4*duration, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.5, options: [], animations: {
+            cell.center.x += 2*shiftFromCenter
+        }, completion: nil)
+        UIView.animate(withDuration: duration, delay: 5*duration, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.5, options: [], animations: {
+            cell.center.x -= 2*shiftFromCenter
+        }, completion: nil)
+        UIView.animate(withDuration: duration, delay: 6*duration, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.5, options: [], animations: {
+            cell.center.x += 2*shiftFromCenter
+        }, completion: nil)
+        UIView.animate(withDuration: duration, delay: 7*duration, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.5, options: [], animations: {
+            cell.center.x -= shiftFromCenter
+        }, completion: nil)
+    }
+    
+    func animationFlipCell(cell: GameCollectionViewCell) {
+        let front = cell.contentView
+        let back = UIView(frame: cell.frame)
+        back.backgroundColor = UIColor.black
+        cell.contentView.addSubview(back)
+        
+        UIView.transition(from: front, to: back, duration: 1, options: UIViewAnimationOptions.transitionFlipFromRight, completion: nil)
+        UIView.transition(from: back, to: front, duration: 1, options: UIViewAnimationOptions.transitionFlipFromLeft, completion: nil)
+    }
+    
+    func animationFlipCell(cell: GameCollectionViewCell, indexPath: IndexPath) {
+        DispatchQueue.main.async {
+            UIView.transition(with: cell.contentView, duration: 0.5, options: UIViewAnimationOptions.transitionFlipFromLeft, animations:  {() -> Void in
+                        self.cardView.reloadItems(at: [indexPath])
+                    }, completion: nil)
+        }
     }
     
     
