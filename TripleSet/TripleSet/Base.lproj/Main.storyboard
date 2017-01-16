@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="slw-hX-VbW">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C68" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="slw-hX-VbW">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -147,46 +147,33 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="FCL-PC-GFQ">
                                 <rect key="frame" x="16" y="161" width="343" height="404"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Ek3-ak-sKM">
-                                    <size key="itemSize" width="75" height="100"/>
+                                    <size key="itemSize" width="75" height="125"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="sFI-Ey-vNj" customClass="GameCollectionViewCell" customModule="TripleSet" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="75" height="100"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="75" height="125"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="75" height="100"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="75" height="125"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EeE-aT-I0q">
-                                                    <rect key="frame" x="21" y="34" width="33" height="33"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EeE-aT-I0q">
+                                                    <rect key="frame" x="17" y="42" width="40" height="40"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Qhv-ng-dsQ">
-                                                    <rect key="frame" x="21" y="67" width="33" height="33"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qhv-ng-dsQ">
+                                                    <rect key="frame" x="17" y="85" width="40" height="40"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Qi0-Y8-uRa">
-                                                    <rect key="frame" x="21" y="0.0" width="33" height="33"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="33" id="dDz-dw-OtZ"/>
-                                                    </constraints>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qi0-Y8-uRa">
+                                                    <rect key="frame" x="17" y="0.0" width="40" height="40"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                             </subviews>
                                         </view>
-                                        <constraints>
-                                            <constraint firstItem="Qhv-ng-dsQ" firstAttribute="top" secondItem="EeE-aT-I0q" secondAttribute="bottom" id="1Ik-lJ-Hiw"/>
-                                            <constraint firstItem="Qi0-Y8-uRa" firstAttribute="trailing" secondItem="EeE-aT-I0q" secondAttribute="trailing" id="JIS-qf-dbh"/>
-                                            <constraint firstItem="Qi0-Y8-uRa" firstAttribute="leading" secondItem="sFI-Ey-vNj" secondAttribute="leadingMargin" constant="13" id="RnC-HE-WED"/>
-                                            <constraint firstItem="Qi0-Y8-uRa" firstAttribute="centerX" secondItem="sFI-Ey-vNj" secondAttribute="centerX" id="Tsm-I3-5W3"/>
-                                            <constraint firstItem="Qi0-Y8-uRa" firstAttribute="leading" secondItem="EeE-aT-I0q" secondAttribute="leading" id="V8F-lf-2rZ"/>
-                                            <constraint firstItem="EeE-aT-I0q" firstAttribute="leading" secondItem="Qhv-ng-dsQ" secondAttribute="leading" id="YSE-Dm-WB9"/>
-                                            <constraint firstItem="EeE-aT-I0q" firstAttribute="centerY" secondItem="sFI-Ey-vNj" secondAttribute="centerY" id="dGQ-5L-nd7"/>
-                                            <constraint firstItem="EeE-aT-I0q" firstAttribute="trailing" secondItem="Qhv-ng-dsQ" secondAttribute="trailing" id="gJX-d1-PGt"/>
-                                            <constraint firstItem="EeE-aT-I0q" firstAttribute="top" secondItem="Qi0-Y8-uRa" secondAttribute="bottom" constant="1" id="h4Y-LV-X2j"/>
-                                            <constraint firstAttribute="bottom" secondItem="Qhv-ng-dsQ" secondAttribute="bottom" id="kk8-3c-KM8"/>
-                                            <constraint firstItem="Qi0-Y8-uRa" firstAttribute="top" secondItem="sFI-Ey-vNj" secondAttribute="top" id="vQC-65-Cnf"/>
-                                        </constraints>
                                         <connections>
                                             <outlet property="imageOne" destination="Qi0-Y8-uRa" id="qGm-Zh-H1z"/>
                                             <outlet property="imageThree" destination="Qhv-ng-dsQ" id="Pol-CY-VyB"/>

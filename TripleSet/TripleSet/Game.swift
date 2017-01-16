@@ -64,11 +64,40 @@ class Game {
         else if sameColors && checkForDifference(bool1: differentAmounts, bool2: differentFigures, bool3: differentFillings) {
             return true
         }
-        
         else if sameFillings && checkForDifference(bool1: differentAmounts, bool2: differentFigures, bool3: differentColors) {
             return true
         }
-        else if checkForAllDifferent(bool1: differentAmounts, bool2: differentFigures, bool3: differentColors, bool4: differentFillings){
+        else if sameAmounts && sameFigures && checkForDifference(bool1: differentColors, bool2: differentFillings, bool3: true) {
+            return true
+        }
+        else if sameAmounts && sameColors && checkForDifference(bool1: differentFigures, bool2: differentFillings, bool3: true) {
+            return true
+        }
+        else if sameAmounts && sameFillings && checkForDifference(bool1: differentColors, bool2: differentFigures, bool3: true) {
+            return true
+        }
+        else if sameFigures && sameColors && checkForDifference(bool1: differentAmounts, bool2: differentFillings, bool3: true) {
+            return true
+        }
+        else if sameFigures && sameFillings && checkForDifference(bool1: differentAmounts, bool2: differentColors, bool3: true) {
+            return true
+        }            
+        else if sameColors && sameFillings && checkForDifference(bool1: differentAmounts, bool2: differentFigures, bool3: true) {
+            return true
+        }
+        else if sameAmounts && sameFigures && sameColors && checkForDifference(bool1: differentFillings, bool2: true, bool3: true) {
+            return true
+        }
+        else if sameAmounts && sameFigures && sameFillings && checkForDifference(bool1: differentColors, bool2: true, bool3: true) {
+            return true
+        }
+        else if sameAmounts && sameFillings && sameColors && checkForDifference(bool1: differentFigures, bool2: true, bool3: true) {
+            return true
+        }
+        else if sameFigures && sameFillings && sameColors && checkForDifference(bool1: differentAmounts, bool2: true, bool3: true) {
+            return true
+        }
+        else if checkForAllDifferent(bool1: differentAmounts, bool2: differentFigures, bool3: differentColors, bool4: differentFillings) {
             return true
         }
         else {
@@ -249,7 +278,7 @@ class Game {
 //        print("Possibilities to make a set: \(possibleSetsFound)")
         print("Possible combination: \(possibleCombination[0]?.getDescription()) - \(possibleCombination[1]?.getDescription()) - \(possibleCombination[2]?.getDescription())")
         
-        return possibleSetsFound
+        return possibleSetsFound / 3
     }
     
     var possibleCombination: [Card?] = [

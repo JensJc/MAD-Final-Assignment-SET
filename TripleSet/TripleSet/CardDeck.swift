@@ -40,7 +40,7 @@ class CardDeck {
     var colors = [Color.Red, Color.Green, Color.Blue]
     var fillings = [Filling.Line, Filling.Stripes, Filling.Full]
     
-    private static let amountCardsOnTable = 16
+    static let amountCardsOnTable = 12
     
     private var cardDeckAllShuffled = [Card]()
     
@@ -204,6 +204,5 @@ class CardDeck {
             }
         }
         print("total cards: " + cardDeckToPrint.count.description)
-    }
-    
+    }    
 }

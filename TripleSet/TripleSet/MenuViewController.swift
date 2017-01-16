@@ -21,6 +21,8 @@ class MenuViewController: UIViewController {
     var soundEffectSettingOn = false
     var musicSettingOn = false
     
+    // MARK: - ViewController Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,9 +33,6 @@ class MenuViewController: UIViewController {
         if let image = UIImage(named: "logo.png") {
             logoImage.image = image
         }
-        
-        
-        // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -64,16 +63,10 @@ class MenuViewController: UIViewController {
         if soundEffectSettingOn { buttonClickSound() }
     }
     
-    
-    // MARK: - Funcs
+    // MARK: - Sounds and Animation
     
     func logoAppear() {
-        let transitionOptions = UIViewAnimationOptions.transitionFlipFromLeft
-        
-        UIView.transition(with: logoImage, duration: 1.0, options: transitionOptions, animations: {})
-        { (finished) in
-            
-        }
+        UIView.transition(with: logoImage, duration: 1.0, options: UIViewAnimationOptions.transitionFlipFromLeft, animations: {}, completion: nil)
     }
     
     func playBackgroundMusic() {
@@ -106,15 +99,4 @@ class MenuViewController: UIViewController {
             print(error.localizedDescription)
         }
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
