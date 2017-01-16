@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AVFoundation
 
 class MenuViewController: UIViewController {
 
@@ -15,8 +14,7 @@ class MenuViewController: UIViewController {
     
     @IBOutlet weak var backgroundImage: UIImageView!
     
-    var backgroundMusicPlayer: AVAudioPlayer?
-    var buttonSoundPlayer: AVAudioPlayer?
+    let musicPlayer = MusicPlayer()
     
     var soundEffectSettingOn = false
     var musicSettingOn = false
@@ -42,61 +40,27 @@ class MenuViewController: UIViewController {
         soundEffectSettingOn = UserDefaults.sharedInstance.soundEffects
         musicSettingOn = UserDefaults.sharedInstance.music
         
-        if musicSettingOn { playBackgroundMusic() }
+        if musicSettingOn { musicPlayer.playBackgroundMusic(named: "menumusic") }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        if backgroundMusicPlayer != nil {
-            backgroundMusicPlayer?.stop()
-        }
+        musicPlayer.stop()
     }
     
     @IBAction func playClick(_ sender: Any) {
-        if soundEffectSettingOn { buttonClickSound() }
+        if soundEffectSettingOn { musicPlayer.playButtonClick() }
     }
     @IBAction func highscoresClick(_ sender: Any) {
-        if soundEffectSettingOn { buttonClickSound() }
+        if soundEffectSettingOn { musicPlayer.playButtonClick() }
     }
     @IBAction func settingsClick(_ sender: Any) {
-        if soundEffectSettingOn { buttonClickSound() }
+        if soundEffectSettingOn { musicPlayer.playButtonClick() }
     }
     
-    // MARK: - Sounds and Animation
+    // MARK: - Animation
     
     func logoAppear() {
         UIView.transition(with: logoImage, duration: 1.0, options: UIViewAnimationOptions.transitionFlipFromLeft, animations: {}, completion: nil)
-    }
-    
-    func playBackgroundMusic() {
-        let url = Bundle.main.url(forResource: "menumusic", withExtension: "mp3")!
-        
-        do {
-            let player = try AVAudioPlayer(contentsOf: url)
-            
-            backgroundMusicPlayer = player
-            
-            backgroundMusicPlayer?.numberOfLoops = -1
-            backgroundMusicPlayer?.prepareToPlay()
-            backgroundMusicPlayer?.play()
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
-    
-    func buttonClickSound() {
-        let url = Bundle.main.url(forResource: "buttonclick", withExtension: "mp3")!
-        
-        do {
-            let player = try AVAudioPlayer(contentsOf: url)
-            
-            buttonSoundPlayer = player
-            
-            buttonSoundPlayer?.prepareToPlay()
-            buttonSoundPlayer?.play()
-        } catch {
-            print(error.localizedDescription)
-        }
     }
 }

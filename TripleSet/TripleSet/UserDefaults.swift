@@ -26,6 +26,24 @@ class UserDefaults {
         
         static let DefaultThemeKey = "Theme"
         static let DefaultThemeSetting = Themes.Normal
+        
+        static let DefaultLastScoreKey = "LastScore"
+        static let DefaultLastScore = 0
+        
+        static let DefaultLastTimeKey = "LastTime"
+        static let DefaultLastTime = 0.0
+        
+        static let DefaultLastFoundSetsKey = "LastFoundSets"
+        static let DefaultLastFoundSets = 0
+        
+        static let DefaultOverallScoreKey = "OverallScore"
+        static let DefaultOverallScore = 0
+        
+        static let DefaultOverallTimeKey = "OverallTime"
+        static let DefaultOverallTime = 0.0
+        
+        static let DefaultOverallFoundSetsKey = "OverallFoundSets"
+        static let DefaultOverallFoundSets = 0
     }
     
     var difficulty: Int {
@@ -83,5 +101,90 @@ class UserDefaults {
             defaults.synchronize()
         }
     }
+    
+    var lastScore: Int {
+        get {
+            if let defaultLastScore = defaults.object(forKey: Constants.DefaultLastScoreKey) as? Int {
+                return defaultLastScore
+            } else {
+                return Constants.DefaultLastScore
+            }
+        }
+        set {
+            defaults.set(newValue, forKey: Constants.DefaultLastScoreKey)
+            defaults.synchronize()
+        }
+    }
+    
+    var lastTime: Double {
+        get {
+            if let defaultLastTime = defaults.object(forKey: Constants.DefaultLastTimeKey) as? Double {
+                return defaultLastTime
+            } else {
+                return Constants.DefaultLastTime
+            }
+        }
+        set {
+            defaults.set(newValue, forKey: Constants.DefaultLastTimeKey)
+            defaults.synchronize()
+        }
+    }
+    
+    var lastFoundSets: Int {
+        get {
+            if let defaultLastFoundSets = defaults.object(forKey: Constants.DefaultLastFoundSetsKey) as? Int {
+                return defaultLastFoundSets
+            } else {
+                return Constants.DefaultLastFoundSets
+            }
+        }
+        set {
+            defaults.set(newValue, forKey: Constants.DefaultLastFoundSetsKey)
+            defaults.synchronize()
+        }
+    }
+    
+    var overallScore: Int {
+        get {
+            if let defaultOverallScore = defaults.object(forKey: Constants.DefaultOverallScoreKey) as? Int {
+                return defaultOverallScore
+            } else {
+                return Constants.DefaultOverallScore
+            }
+        }
+        set {
+            defaults.set(newValue, forKey: Constants.DefaultOverallScoreKey)
+            defaults.synchronize()
+        }
+    }
+    
+    var overallTime: Double {
+        get {
+            if let defaultOverallTime = defaults.object(forKey: Constants.DefaultOverallTimeKey) as? Double {
+                return defaultOverallTime
+            } else {
+                return Constants.DefaultOverallTime
+            }
+        }
+        set {
+            defaults.set(newValue, forKey: Constants.DefaultOverallTimeKey)
+            defaults.synchronize()
+        }
+    }
+    
+    var overallFoundSets: Int {
+        get {
+            if let defaultOverallFoundSets = defaults.object(forKey: Constants.DefaultOverallFoundSetsKey) as? Int {
+                return defaultOverallFoundSets
+            } else {
+                return Constants.DefaultOverallFoundSets
+            }
+        }
+        set {
+            defaults.set(newValue, forKey: Constants.DefaultOverallFoundSetsKey)
+            defaults.synchronize()
+        }
+    }
+    
     
 }

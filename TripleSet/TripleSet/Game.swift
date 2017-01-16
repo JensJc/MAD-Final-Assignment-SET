@@ -16,7 +16,43 @@ class Game {
         static let hintUsed = -250
     }
     
+    let cardDeck: CardDeck = CardDeck()
     var score: Int = 0
+    var startTime: NSDate?
+    
+    //MARK: - Game functions
+    
+    func start() {
+        cardDeck.generateCardDeck()
+        startTime = NSDate()
+    }
+    
+    func isGameOver() -> Bool {
+        let openCards = cardDeck.getCardDeckOnTable()
+        if cardDeck.getCardDeckRemainingCount() == 0 && getPossibilitiesToMakeSet(cardDeck: openCards) == 0 {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    
+    func replaceCardOnTable(card: Card) -> Card?{
+        return cardDeck.replaceCardOnTable(cardToReplace: card)
+    }
+    
+    func getRemaingCardDeckCount() -> Int {
+        return cardDeck.getCardDeckRemainingCount()
+    }
+    
+    func shuffleCards() -> [Card?] {
+        cardDeck.shuffleAllCards()
+        return cardDeck.getCardDeckOnTable()
+    }
+    
+    func getCardsOnTable() -> [Card?] {
+        return cardDeck.getCardDeckOnTable()
+    }
     
     func scoreSetFound() {
         score += Score.setFound
@@ -30,15 +66,12 @@ class Game {
         return score
     }
     
-    func isGameOver(cardDeck: CardDeck) -> Bool {
-        let openCards = cardDeck.getCardDeckOnTable()
-        if cardDeck.getCardDeckRemainingCount() == 0 && getPossibilitiesToMakeSet(cardDeck: openCards) == 0 {
-            return true
-        }
-        else {
-            return false
-        }
+    func getElapsedTime() -> Double {
+        let endTime = NSDate()
+        return endTime.timeIntervalSince(startTime! as Date)
     }
+    
+    // MARK: - Checking for SET
     
     func checkSet(card1: Card, card2: Card, card3: Card) -> Bool {
         let sameAmounts = checkForSameAmount(card1: card1, card2: card2, card3: card3)
@@ -245,6 +278,8 @@ class Game {
         }
     }
     
+    // MARK: - Calculation of possible SETS
+    
     func getPossibilitiesToMakeSet(cardDeck: [Card?]) -> Int {
         var possibleSetsFound = 0
         
@@ -301,6 +336,8 @@ class Game {
             return false
         }
     }
+    
+    // MARK: - Test
     
     func setTests() {
         var card1 = Card(amount: 1, figure: "cl", color: UIColor.red, filling: "l")

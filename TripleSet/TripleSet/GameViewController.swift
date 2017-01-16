@@ -7,16 +7,13 @@
 //
 
 import UIKit
-import AVFoundation
 
 class GameViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
 
-    var backgroundMusicPlayer: AVAudioPlayer?
+    let musicPlayer = MusicPlayer()
     let reuseIdentifier = "cell"
-    var buttonSoundPlayer: AVAudioPlayer?
     
     let game: Game = Game()
-    let cardDeck: CardDeck = CardDeck()
     
     var cardDeckOnTable = [Card?]()
     var selectedCardIndexes = [IndexPath]()
@@ -28,13 +25,6 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     var soundEffectSettingOn = false
     var musicSettingOn = false
-    
-    private struct Sounds {
-        static let CardClick = "cardclick"
-        static let SetFound = "setfound"
-        static let WrongSet = "wrongset"
-        static let ButtonClick = "buttonclick"
-    }
     
     private struct LabelConstants {
         static let score = "Score:"
@@ -68,12 +58,13 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     
     @IBAction func shakeButtonClicked(_ sender: UIButton) {
-        if soundEffectSettingOn { playButtonClick() }
+        if soundEffectSettingOn { musicPlayer.playButtonClick() }
         shuffleCards()
     }
     
     @IBAction func hintButtonClicked(_ sender: UIButton) {
-        playButtonClick()
+        if soundEffectSettingOn { musicPlayer.playButtonClick() }
+        
         deselectAllSelectedCells()
         
         let possibleSet = game.possibleCombination
@@ -112,67 +103,13 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if musicSettingOn { playBackgroundMusic() }
+        if musicSettingOn { musicPlayer.playBackgroundMusic(named: "gamemusic") }
     }
     
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        if backgroundMusicPlayer != nil {
-            backgroundMusicPlayer?.stop()
-        }
-    }
-    
-    // MARK: - Sound functions
-    
-    func playBackgroundMusic() {
-        if UserDefaults.sharedInstance.music {
-            let url = Bundle.main.url(forResource: "gamemusic", withExtension: "mp3")!
-        
-            do {
-                let player = try AVAudioPlayer(contentsOf: url)
-            
-                backgroundMusicPlayer = player
-            
-                backgroundMusicPlayer?.numberOfLoops = -1
-                backgroundMusicPlayer?.prepareToPlay()
-                backgroundMusicPlayer?.play()
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
-    }
-    
-    func playCardClickSound() {
-        playSound(soundDescription: Sounds.CardClick)
-    }
-    
-    func playSetFoundSound() {
-        playSound(soundDescription: Sounds.SetFound)
-    }
-    
-    func playWrongSetSound() {
-        playSound(soundDescription: Sounds.WrongSet)
-    }
-    
-    func playButtonClick() {
-        playSound(soundDescription: Sounds.ButtonClick)
-    }
-    
-    func playSound(soundDescription: String) {
-        let url = Bundle.main.url(forResource: soundDescription, withExtension: "mp3")!
-        
-        do {
-            let player = try AVAudioPlayer(contentsOf: url)
-            
-            buttonSoundPlayer = player
-            
-            buttonSoundPlayer?.prepareToPlay()
-            buttonSoundPlayer?.play()
-        } catch {
-            print(error.localizedDescription)
-        }
+        musicPlayer.stop()
     }
     
     // MARK: - Collection view
@@ -197,7 +134,7 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
     // MARK: - UICollectionViewDelegate protocol
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if soundEffectSettingOn { playCardClickSound() }
+        if soundEffectSettingOn { musicPlayer.playCardClickSound() }
 
         let selectedCell:GameCollectionViewCell = collectionView.cellForItem(at: indexPath)! as! GameCollectionViewCell
         if let card = cardDeckOnTable[indexPath.item] {
@@ -224,8 +161,8 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
     // MARK: - Functions
     
     func startGame() {
-        cardDeck.generateCardDeck()
-        cardDeckOnTable = cardDeck.getCardDeckOnTable()
+        game.start()
+        cardDeckOnTable = game.getCardsOnTable()
 
         game.setTests()
         refreshInfo()
@@ -238,7 +175,7 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
             print("setFound: \(setFound)")
             
             if setFound {
-                if soundEffectSettingOn { playSetFoundSound() }
+                if soundEffectSettingOn { musicPlayer.playSetFoundSound() }
                 
                 replaceCards()
                 
@@ -247,19 +184,21 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
                 
                 refreshInfo()
                 
-                if game.isGameOver(cardDeck: cardDeck) {
+                if game.isGameOver() {
                     gameOverAlert()
                 }
             }
             else {
                 // deselect items
-                if soundEffectSettingOn { playWrongSetSound() }
+                if soundEffectSettingOn { musicPlayer.playWrongSetSound() }
                 deselectAllSelectedCells()
             }
         }
     }
     
     func gameOverAlert() {
+        updateHighScores()
+        
         let alert = UIAlertController(title: "All SET's found!", message: "Congratulations, you've found all possible SET's!", preferredStyle: UIAlertControllerStyle.alert)
         let newGameAction = UIAlertAction(title: "New game", style: UIAlertActionStyle.cancel) { (action: UIAlertAction!) in
             
@@ -270,6 +209,26 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         alert.addAction(newGameAction)
         present(alert, animated: true, completion: nil)
+    }
+    
+    func updateHighScores() {
+        let time: Double = game.getElapsedTime()
+        
+        UserDefaults.sharedInstance.lastScore = score
+        UserDefaults.sharedInstance.lastTime = time
+        UserDefaults.sharedInstance.lastFoundSets = foundSets
+        
+        if score > UserDefaults.sharedInstance.overallScore {
+            UserDefaults.sharedInstance.overallScore = score
+        }
+        
+        if time < UserDefaults.sharedInstance.overallTime || time == 0.0 {
+            UserDefaults.sharedInstance.overallTime = time
+        }
+        
+        if foundSets > UserDefaults.sharedInstance.overallFoundSets {
+            UserDefaults.sharedInstance.overallFoundSets = foundSets
+        }
     }
     
     func checkForSet() -> Bool {
@@ -299,9 +258,9 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         let cell2:GameCollectionViewCell = cardView.cellForItem(at: selectedCardIndexes[1])! as! GameCollectionViewCell
         let cell3:GameCollectionViewCell = cardView.cellForItem(at: selectedCardIndexes[2])! as! GameCollectionViewCell
         
-        cardDeckOnTable[selectedCardIndexes[0].item] = cardDeck.replaceCardOnTable(cardToReplace: card1!)
-        cardDeckOnTable[selectedCardIndexes[1].item] = cardDeck.replaceCardOnTable(cardToReplace: card2!)
-        cardDeckOnTable[selectedCardIndexes[2].item] = cardDeck.replaceCardOnTable(cardToReplace: card3!)
+        cardDeckOnTable[selectedCardIndexes[0].item] = game.replaceCardOnTable(card: card1!)
+        cardDeckOnTable[selectedCardIndexes[1].item] = game.replaceCardOnTable(card: card2!)
+        cardDeckOnTable[selectedCardIndexes[2].item] = game.replaceCardOnTable(card: card3!)
         
         animationFlipCell(cell: cell1, indexPath: selectedCardIndexes[0])
         animationFlipCell(cell: cell2, indexPath: selectedCardIndexes[1])
@@ -312,7 +271,7 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     func refreshInfo() {
         possibleSets = game.getPossibilitiesToMakeSet(cardDeck: cardDeckOnTable)
-        cardsInDeck = cardDeck.getCardDeckRemainingCount()
+        cardsInDeck = game.getRemaingCardDeckCount()
         refreshScore()
         
         print("Possibilities to make a set: \(possibleSets)")
@@ -339,9 +298,8 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     func shuffleCards() {
         deselectAllSelectedCells()
-        
-        cardDeck.shuffleAllCards()
-        cardDeckOnTable = cardDeck.getCardDeckOnTable()
+                
+        cardDeckOnTable = game.shuffleCards()
         cardView.reloadData()
         
         refreshInfo()
