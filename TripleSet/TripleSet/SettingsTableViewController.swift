@@ -35,11 +35,28 @@ struct Theme {
             return UIColor.orange
         }
     }
+    
+    static func getGameMusic() -> String {
+        if UserDefaults.sharedInstance.theme == Themes.Christmas {
+            return "christmasgamemusic"
+        } else {
+            return "gamemusic"
+        }
+    }
+    
+    static func getMenuMusic() -> String {
+        if UserDefaults.sharedInstance.theme == Themes.Christmas {
+            return "christmasmenumusic"
+        } else {
+            return "menumusic"
+        }
+    }
 }
 
 class SettingsTableViewController: UITableViewController {
     // MARK: - Class Variables
     let sections = [SectionTitles.Game, SectionTitles.Sounds, SectionTitles.Themes]
+    let musicPlayer = MusicPlayer()
     
     private struct SectionTitles {
         static let Game = "Game"
@@ -99,6 +116,7 @@ class SettingsTableViewController: UITableViewController {
     
     // MARK: - @IBActions
     @IBAction func difficultySegmentedControlValueChanged(_ sender: UISegmentedControl) {
+        if UserDefaults.sharedInstance.soundEffects { musicPlayer.playButtonClick() }
         switch sender.selectedSegmentIndex {
         case Difficulty.Easy:
             UserDefaults.sharedInstance.difficulty = Difficulty.Easy
@@ -113,10 +131,18 @@ class SettingsTableViewController: UITableViewController {
     
     @IBAction func soundEffectsControlValueChanged(_ sender: UISwitch) {
         UserDefaults.sharedInstance.soundEffects = sender.isOn
+        if UserDefaults.sharedInstance.soundEffects { musicPlayer.playButtonClick() }
+     
     }
     
     @IBAction func musicControlValueChanged(_ sender: UISwitch) {
         UserDefaults.sharedInstance.music = sender.isOn
+        
+        if sender.isOn {
+            musicPlayer.playBackgroundMusic(named: Theme.getMenuMusic())
+        } else {
+            musicPlayer.stop()
+        }
     }
     
     // MARK: - Functions
@@ -145,6 +171,8 @@ class SettingsTableViewController: UITableViewController {
         musicLabel.textColor = Theme.getColor()
         normalLabel.textColor = Theme.getColor()
         christmasLabel.textColor = Theme.getColor()
+        
+        if UserDefaults.sharedInstance.music { musicPlayer.playBackgroundMusic(named: Theme.getMenuMusic()) }
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: Theme.getColor()]
     }
     
@@ -159,6 +187,17 @@ class SettingsTableViewController: UITableViewController {
         }
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: Theme.getColor()]
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+               
+        if UserDefaults.sharedInstance.music { musicPlayer.playBackgroundMusic(named: Theme.getMenuMusic()) }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        musicPlayer.stop()
     }
 
     // MARK: - Table view data source
@@ -176,6 +215,7 @@ class SettingsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if sections[indexPath.section] == SectionTitles.Themes {
+            if UserDefaults.sharedInstance.soundEffects { musicPlayer.playButtonClick() }
             selectTheme(theme: indexPath.row)
             UserDefaults.sharedInstance.theme = indexPath.row
             refreshTheme()

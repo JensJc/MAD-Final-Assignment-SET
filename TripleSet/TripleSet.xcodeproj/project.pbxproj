@@ -15,6 +15,8 @@
 		8B7B2F2E1E2791C000D3CBAF /* setfound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8B7B2F2A1E2791C000D3CBAF /* setfound.mp3 */; };
 		8B7B2F2F1E2791C000D3CBAF /* wrongset.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8B7B2F2B1E2791C000D3CBAF /* wrongset.mp3 */; };
 		8BAC23E51E2D1808007C6956 /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAC23E41E2D1808007C6956 /* MusicPlayer.swift */; };
+		8BCE718D1E2E4F4A00B5BC86 /* christmasgamemusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8BCE718C1E2E4F4A00B5BC86 /* christmasgamemusic.mp3 */; };
+		8BCE718F1E2E4F5200B5BC86 /* christmasmenumusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8BCE718E1E2E4F5200B5BC86 /* christmasmenumusic.mp3 */; };
 		C97732821E1E88BE008247BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97732811E1E88BE008247BA /* AppDelegate.swift */; };
 		C97732871E1E88BE008247BA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C97732851E1E88BE008247BA /* Main.storyboard */; };
 		C97732891E1E88BE008247BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C97732881E1E88BE008247BA /* Assets.xcassets */; };
@@ -57,6 +59,8 @@
 		8B7B2F2A1E2791C000D3CBAF /* setfound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = setfound.mp3; sourceTree = "<group>"; };
 		8B7B2F2B1E2791C000D3CBAF /* wrongset.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = wrongset.mp3; sourceTree = "<group>"; };
 		8BAC23E41E2D1808007C6956 /* MusicPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicPlayer.swift; sourceTree = "<group>"; };
+		8BCE718C1E2E4F4A00B5BC86 /* christmasgamemusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = christmasgamemusic.mp3; sourceTree = "<group>"; };
+		8BCE718E1E2E4F5200B5BC86 /* christmasmenumusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = christmasmenumusic.mp3; sourceTree = "<group>"; };
 		C977327E1E1E88BE008247BA /* TripleSet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TripleSet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C97732811E1E88BE008247BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C97732861E1E88BE008247BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -116,6 +120,8 @@
 		8B7B2F221E2791B300D3CBAF /* Music */ = {
 			isa = PBXGroup;
 			children = (
+				8BCE718C1E2E4F4A00B5BC86 /* christmasgamemusic.mp3 */,
+				8BCE718E1E2E4F5200B5BC86 /* christmasmenumusic.mp3 */,
 				8B7B2F231E2791B300D3CBAF /* gamemusic.mp3 */,
 				8B7B2F241E2791B300D3CBAF /* menumusic.mp3 */,
 			);
@@ -309,8 +315,10 @@
 				C977328C1E1E88BE008247BA /* LaunchScreen.storyboard in Resources */,
 				C97732891E1E88BE008247BA /* Assets.xcassets in Resources */,
 				8B7B2F2E1E2791C000D3CBAF /* setfound.mp3 in Resources */,
+				8BCE718F1E2E4F5200B5BC86 /* christmasmenumusic.mp3 in Resources */,
 				8B7B2F251E2791B300D3CBAF /* gamemusic.mp3 in Resources */,
 				C97732871E1E88BE008247BA /* Main.storyboard in Resources */,
+				8BCE718D1E2E4F4A00B5BC86 /* christmasgamemusic.mp3 in Resources */,
 				8B7B2F261E2791B300D3CBAF /* menumusic.mp3 in Resources */,
 				8B7B2F2F1E2791C000D3CBAF /* wrongset.mp3 in Resources */,
 				8B7B2F2D1E2791C000D3CBAF /* cardclick.mp3 in Resources */,

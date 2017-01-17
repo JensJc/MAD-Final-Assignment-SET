@@ -59,7 +59,7 @@ class MenuViewController: UIViewController {
         soundEffectSettingOn = UserDefaults.sharedInstance.soundEffects
         musicSettingOn = UserDefaults.sharedInstance.music
         
-        if musicSettingOn { musicPlayer.playBackgroundMusic(named: "menumusic") }
+        if musicSettingOn { musicPlayer.playBackgroundMusic(named: Theme.getMenuMusic()) }
     }
 
     override func viewWillDisappear(_ animated: Bool) {

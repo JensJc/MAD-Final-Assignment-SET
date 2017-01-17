@@ -119,7 +119,7 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
          
-        if musicSettingOn { musicPlayer.playBackgroundMusic(named: "gamemusic") }
+        if musicSettingOn { musicPlayer.playBackgroundMusic(named: Theme.getGameMusic()) }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

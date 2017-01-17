@@ -67,7 +67,7 @@ class HighScoresViewController: UIViewController {
         }
         setLabelColors()
         
-        musicPlayer.playBackgroundMusic(named: "menumusic")
+        musicPlayer.playBackgroundMusic(named: Theme.getMenuMusic())
         
         lastBestScore = "\(UserDefaults.sharedInstance.lastScore)"
         lastBestTime = "\(round(UserDefaults.sharedInstance.lastTime))s"
