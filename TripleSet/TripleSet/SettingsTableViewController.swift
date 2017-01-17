@@ -19,6 +19,24 @@ struct Themes {
     static let Christmas = 1
 }
 
+struct Theme {
+    static func getBackgroundImage() -> UIImage? {
+        if UserDefaults.sharedInstance.theme == Themes.Christmas {
+            return UIImage(named: "christmastheme")
+        } else {
+            return UIImage(named: "normaltheme")
+        }
+    }
+    
+    static func getColor() -> UIColor {
+        if UserDefaults.sharedInstance.theme == Themes.Christmas {
+            return UIColor.red
+        } else {
+            return UIColor.orange
+        }
+    }
+}
+
 class SettingsTableViewController: UITableViewController {
     // MARK: - Class Variables
     let sections = [SectionTitles.Game, SectionTitles.Sounds, SectionTitles.Themes]
@@ -61,9 +79,23 @@ class SettingsTableViewController: UITableViewController {
     }
     
     @IBOutlet weak var themeNormalLabel: UILabel!
-    
     @IBOutlet weak var themeChristmasLabel: UILabel!
     
+    @IBOutlet weak var difficultyLabel: UILabel! {
+        didSet{ difficultyLabel.textColor = Theme.getColor() }
+    }
+    @IBOutlet weak var soundEffectsLabel: UILabel!{
+        didSet{ soundEffectsLabel.textColor = Theme.getColor() }
+    }
+    @IBOutlet weak var musicLabel: UILabel!{
+        didSet{ musicLabel.textColor = Theme.getColor() }
+    }
+    @IBOutlet weak var normalLabel: UILabel!{
+        didSet{ normalLabel.textColor = Theme.getColor() }
+    }
+    @IBOutlet weak var christmasLabel: UILabel!{
+        didSet{ christmasLabel.textColor = Theme.getColor() }
+    }
     
     // MARK: - @IBActions
     @IBAction func difficultySegmentedControlValueChanged(_ sender: UISegmentedControl) {
@@ -93,12 +125,27 @@ class SettingsTableViewController: UITableViewController {
         case Themes.Normal:
             themeNormalLabel.text = Constants.Activated
             themeChristmasLabel.text = Constants.Deactivated
+            break
         case Themes.Christmas:
             themeNormalLabel.text = Constants.Deactivated
             themeChristmasLabel.text = Constants.Activated
             break
         default: break
         }
+        
+    }
+    
+    func refreshTheme() {
+        tableView.reloadData()
+        if let image = Theme.getBackgroundImage() {
+            self.view.backgroundColor = UIColor(patternImage: image)
+        }
+        difficultyLabel.textColor = Theme.getColor()
+        soundEffectsLabel.textColor = Theme.getColor()
+        musicLabel.textColor = Theme.getColor()
+        normalLabel.textColor = Theme.getColor()
+        christmasLabel.textColor = Theme.getColor()
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: Theme.getColor()]
     }
     
     // MARK: - Overide Functions
@@ -107,11 +154,11 @@ class SettingsTableViewController: UITableViewController {
 
         selectTheme(theme: UserDefaults.sharedInstance.theme)
         
-        if let image = UIImage(named: "normaltheme.png") {
+        if let image = Theme.getBackgroundImage() {
             self.view.backgroundColor = UIColor(patternImage: image)
         }
         
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.orange]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: Theme.getColor()]
     }
 
     // MARK: - Table view data source
@@ -131,6 +178,7 @@ class SettingsTableViewController: UITableViewController {
         if sections[indexPath.section] == SectionTitles.Themes {
             selectTheme(theme: indexPath.row)
             UserDefaults.sharedInstance.theme = indexPath.row
+            refreshTheme()
         }
         
     }
@@ -143,6 +191,6 @@ class SettingsTableViewController: UITableViewController {
         let header = view as! UITableViewHeaderFooterView
         
         header.textLabel?.textColor = UIColor.white
-        header.tintColor = UIColor.orange
+        header.tintColor = Theme.getColor()
     }
 }

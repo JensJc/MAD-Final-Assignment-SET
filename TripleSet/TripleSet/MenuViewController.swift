@@ -11,8 +11,9 @@ import UIKit
 class MenuViewController: UIViewController {
 
     @IBOutlet weak var logoImage: UIImageView!
-    
-    @IBOutlet weak var backgroundImage: UIImageView!
+    @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var highscoresButton: UIButton!
+    @IBOutlet weak var settingsButton: UIButton!
     
     let musicPlayer = MusicPlayer()
     
@@ -22,15 +23,7 @@ class MenuViewController: UIViewController {
     // MARK: - ViewController Lifecycle
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        if let image = UIImage(named: "normaltheme.png") {
-             self.view.backgroundColor = UIColor(patternImage: image)
-        }
-        
-        if let image = UIImage(named: "logo.png") {
-            logoImage.image = image
-        }
+        super.viewDidLoad()        
         
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
@@ -40,8 +33,27 @@ class MenuViewController: UIViewController {
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        if let image = Theme.getBackgroundImage() {
+            self.view.backgroundColor = UIColor(patternImage: image)
+        }
+        
+        if let image = UIImage(named: "logo.png") {
+            logoImage.image = image.withRenderingMode(.alwaysTemplate)
+            logoImage.tintColor = Theme.getColor()
+        }
+
+        playButton.setTitleColor(Theme.getColor(), for: .normal)
+        highscoresButton.setTitleColor(Theme.getColor(), for: .normal)
+        settingsButton.setTitleColor(Theme.getColor(), for: .normal)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        
         logoAppear()
         
         soundEffectSettingOn = UserDefaults.sharedInstance.soundEffects

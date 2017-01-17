@@ -37,25 +37,39 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
     // MARK: - Outlets and Actions
 
     @IBOutlet weak var scoreLabel: UILabel! {
-        didSet { scoreLabel.text = LabelConstants.score }
+        didSet {
+            scoreLabel.text = LabelConstants.score
+            scoreLabel.textColor = Theme.getColor()
+        }
     }
     @IBOutlet weak var foundSetsLabel: UILabel! {
-        didSet { foundSetsLabel.text = LabelConstants.foundSets }
+        didSet {
+            foundSetsLabel.text = LabelConstants.foundSets
+            foundSetsLabel.textColor = Theme.getColor()
+        }
     }
     @IBOutlet weak var possibleSetsLabel: UILabel! {
-        didSet { possibleSetsLabel.text = LabelConstants.possibleSets }
+        didSet {
+            possibleSetsLabel.text = LabelConstants.possibleSets
+            possibleSetsLabel.textColor = Theme.getColor()
+        }
     }
     @IBOutlet weak var cardsInDeckLabel: UILabel! {
-        didSet { cardsInDeckLabel.text = LabelConstants.cardsInDeck }
+        didSet {
+            cardsInDeckLabel.text = LabelConstants.cardsInDeck
+            cardsInDeckLabel.textColor = Theme.getColor()
+        }
     }
     
     @IBOutlet weak var cardView: UICollectionView! {
         didSet {
-            if let image = UIImage(named: "normaltheme.png") {
+            if let image = Theme.getBackgroundImage() {
                 cardView.backgroundColor = UIColor(patternImage: image)
             }
         }
     }
+    @IBOutlet weak var shakeButton: UIButton!
+    @IBOutlet weak var hintButton: UIButton!
     
     @IBAction func shakeButtonClicked(_ sender: UIButton) {
         if soundEffectSettingOn { musicPlayer.playButtonClick() }
@@ -90,22 +104,23 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let image = UIImage(named: "normaltheme.png") {
+        if let image = Theme.getBackgroundImage() {
             self.view.backgroundColor = UIColor(patternImage: image)
         }
-                
+        shakeButton.setTitleColor(Theme.getColor(), for: .normal)
+        hintButton.setTitleColor(Theme.getColor(), for: .normal)
+        
         soundEffectSettingOn = UserDefaults.sharedInstance.soundEffects
         musicSettingOn = UserDefaults.sharedInstance.music
         
         startGame()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+         
         if musicSettingOn { musicPlayer.playBackgroundMusic(named: "gamemusic") }
     }
-    
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)

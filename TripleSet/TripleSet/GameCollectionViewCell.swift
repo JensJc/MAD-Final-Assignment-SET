@@ -42,7 +42,6 @@ class GameCollectionViewCell: UICollectionViewCell {
         switch amount{
         case 1:
             imageTwo.image = image
-            
             imageTwo.tintColor = color
         case 2:
             imageOne.image = image

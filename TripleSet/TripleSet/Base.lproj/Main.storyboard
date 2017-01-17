@@ -22,10 +22,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lpu-27-9R2" userLabel="Background Image View">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Y1f-Oe-8c4" userLabel="Logo Image View">
                                 <rect key="frame" x="67" y="112" width="240" height="196"/>
                             </imageView>
@@ -80,8 +76,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="BlW-PF-g3M"/>
                     <connections>
-                        <outlet property="backgroundImage" destination="Lpu-27-9R2" id="l4u-Mb-Px7"/>
+                        <outlet property="highscoresButton" destination="MtF-Wh-kPr" id="OC5-la-37q"/>
                         <outlet property="logoImage" destination="Y1f-Oe-8c4" id="WHu-nr-XxB"/>
+                        <outlet property="playButton" destination="Fvz-9y-2In" id="trR-yU-I1w"/>
+                        <outlet property="settingsButton" destination="EXb-9Y-L5G" id="FKk-np-ubR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JYj-rA-0BW" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -216,8 +214,10 @@
                         <outlet property="cardView" destination="FCL-PC-GFQ" id="t9B-2Y-G7L"/>
                         <outlet property="cardsInDeckLabel" destination="QQX-nI-DQ3" id="wVS-Jh-5EM"/>
                         <outlet property="foundSetsLabel" destination="nO0-LQ-9jG" id="pqd-ub-O8s"/>
+                        <outlet property="hintButton" destination="ZAe-BV-uhe" id="yuy-Lx-V4A"/>
                         <outlet property="possibleSetsLabel" destination="eFI-6S-LVF" id="0Wu-6t-xBo"/>
                         <outlet property="scoreLabel" destination="7H4-EP-DQl" id="TvD-h9-5KC"/>
+                        <outlet property="shakeButton" destination="Y6X-Rb-JFF" id="3ng-Sh-7Yt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -367,12 +367,21 @@
                     <navigationItem key="navigationItem" id="Sm1-4d-RWk"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="foundSetLastLabel" destination="bHM-3e-XrM" id="dK5-jv-WqX"/>
+                        <outlet property="foundSetOverallLabel" destination="UXJ-Ll-O8c" id="1Cz-Pw-cgc"/>
                         <outlet property="lastBestScoreLabel" destination="QMM-Ye-nNQ" id="ZnC-Fj-qTc"/>
                         <outlet property="lastBestTimeLabel" destination="rMj-1t-aDy" id="Gu1-X7-e9O"/>
                         <outlet property="lastFoundSetsLabel" destination="Gse-QH-85Q" id="ec9-dR-waH"/>
-                        <outlet property="overallBestScoreLabel" destination="ZlI-Hb-VAf" id="eB7-Ko-6Du"/>
-                        <outlet property="overallBestTimeLabel" destination="TFa-tr-jMD" id="0H2-Ec-osD"/>
+                        <outlet property="lastgameLabel" destination="2CL-Og-9I4" id="Y3c-cK-3ti"/>
+                        <outlet property="overallBestScoreLabel" destination="ZlI-Hb-VAf" id="uT9-1K-Ytv"/>
+                        <outlet property="overallBestTimeLabel" destination="TFa-tr-jMD" id="5H5-Jy-NJD"/>
                         <outlet property="overallFoundSetsLabel" destination="yLu-bl-FhT" id="52g-SD-B9S"/>
+                        <outlet property="overallLabel" destination="3ew-fU-dQt" id="63v-bZ-30h"/>
+                        <outlet property="scoreLabel" destination="uiT-by-F5a" id="qTY-x6-Nor"/>
+                        <outlet property="scoreOverallLabel" destination="ErN-iO-CXO" id="7cc-Hf-aaJ"/>
+                        <outlet property="timeLabel" destination="4Jt-0r-8ck" id="7gy-oL-CQV"/>
+                        <outlet property="timeOverallLabel" destination="cHs-GT-SVj" id="9mx-aY-RI8"/>
+                        <outlet property="titleLabel" destination="8Pa-x3-63S" id="Rhr-cB-jHW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tHo-pO-0JA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -395,7 +404,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="s2w-rH-C5s" id="WN4-XO-mde">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Difficulty" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eRO-GB-1fX">
@@ -429,7 +438,7 @@
                                         <rect key="frame" x="0.0" y="100" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ARJ-Ct-WiK" id="Hsj-ZS-94B">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sound Effects" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7j3-ty-bOh">
@@ -453,7 +462,7 @@
                                         <rect key="frame" x="0.0" y="144" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DbU-JE-Bsd" id="vPv-u3-mXl">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Music" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BzB-Dr-LiB">
@@ -481,7 +490,7 @@
                                         <rect key="frame" x="0.0" y="216" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Eor-co-kZx" id="SGa-0z-Cmi">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Normal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d4p-7e-8Aj">
@@ -505,7 +514,7 @@
                                         <rect key="frame" x="0.0" y="260" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iR3-Yk-hWs" id="UFV-nY-plU">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Christmas" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U8L-Iu-Cxl">
@@ -536,8 +545,13 @@
                     <navigationItem key="navigationItem" title="SETTINGS" id="k9f-fd-G2g"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="christmasLabel" destination="U8L-Iu-Cxl" id="XV7-0R-7vC"/>
+                        <outlet property="difficultyLabel" destination="eRO-GB-1fX" id="rjd-Xz-J62"/>
                         <outlet property="difficultySetting" destination="exc-dB-YWE" id="Vq3-m0-fo0"/>
+                        <outlet property="musicLabel" destination="BzB-Dr-LiB" id="eOp-FM-iyo"/>
                         <outlet property="musicSwitch" destination="eDW-E5-h87" id="soJ-ra-oR0"/>
+                        <outlet property="normalLabel" destination="d4p-7e-8Aj" id="LRx-FK-9Rb"/>
+                        <outlet property="soundEffectsLabel" destination="7j3-ty-bOh" id="YTW-Sg-hS4"/>
                         <outlet property="soundEffectsSwitch" destination="r3l-Vf-QrI" id="kXy-of-G6l"/>
                         <outlet property="themeChristmasLabel" destination="VQ8-Dt-nuz" id="wec-ey-pSr"/>
                         <outlet property="themeNormalLabel" destination="bI4-aO-H9k" id="Df6-i5-Nrm"/>
@@ -545,7 +559,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="maA-pD-2R6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1215" y="909"/>
+            <point key="canvasLocation" x="-1215.2" y="908.9955022488756"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="xNt-pa-Gj0">

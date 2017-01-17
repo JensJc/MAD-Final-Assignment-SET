@@ -7,14 +7,29 @@
 //
 
 import UIKit
+import SceneKit
 
 class HighScoresViewController: UIViewController {
  
     let musicPlayer = MusicPlayer()
+    @IBOutlet weak var titleLabel: UILabel!
+    
+    @IBOutlet weak var lastgameLabel: UILabel!
+    
+    @IBOutlet weak var scoreLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var foundSetLastLabel: UILabel!
     
     @IBOutlet weak var lastBestScoreLabel: UILabel!
     @IBOutlet weak var lastBestTimeLabel: UILabel!
     @IBOutlet weak var lastFoundSetsLabel: UILabel!
+    
+    @IBOutlet weak var overallLabel: UILabel!
+    
+    @IBOutlet weak var foundSetOverallLabel: UILabel!
+    @IBOutlet weak var scoreOverallLabel: UILabel!
+    @IBOutlet weak var timeOverallLabel: UILabel!
+    
     @IBOutlet weak var overallBestScoreLabel: UILabel!
     @IBOutlet weak var overallBestTimeLabel: UILabel!
     @IBOutlet weak var overallFoundSetsLabel: UILabel!
@@ -47,9 +62,10 @@ class HighScoresViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let image = UIImage(named: "normaltheme.png") {
+        if let image = Theme.getBackgroundImage() {
             self.view.backgroundColor = UIColor(patternImage: image)
         }
+        setLabelColors()
         
         musicPlayer.playBackgroundMusic(named: "menumusic")
         
@@ -64,5 +80,25 @@ class HighScoresViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         musicPlayer.stop()
+    }
+
+    func setLabelColors() {
+        titleLabel.textColor = Theme.getColor()
+        
+        lastgameLabel.textColor = Theme.getColor()
+        scoreLabel.textColor = Theme.getColor()
+        timeLabel.textColor = Theme.getColor()
+        foundSetLastLabel.textColor = Theme.getColor()
+        lastBestScoreLabel.textColor = Theme.getColor()
+        lastBestTimeLabel.textColor = Theme.getColor()
+        lastFoundSetsLabel.textColor = Theme.getColor()
+        
+        overallLabel.textColor = Theme.getColor()
+        scoreOverallLabel.textColor = Theme.getColor()
+        timeOverallLabel.textColor = Theme.getColor()
+        foundSetOverallLabel.textColor = Theme.getColor()
+        overallBestScoreLabel.textColor = Theme.getColor()
+        overallBestTimeLabel.textColor = Theme.getColor()
+        overallFoundSetsLabel.textColor = Theme.getColor()
     }
 }
