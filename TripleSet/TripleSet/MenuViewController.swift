@@ -31,6 +31,13 @@ class MenuViewController: UIViewController {
         if let image = UIImage(named: "logo.png") {
             logoImage.image = image
         }
+        
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.navigationBar.tintColor = UIColor.red
+           
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {

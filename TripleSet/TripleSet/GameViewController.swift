@@ -93,7 +93,7 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         if let image = UIImage(named: "normaltheme.png") {
             self.view.backgroundColor = UIColor(patternImage: image)
         }
-       
+                
         soundEffectSettingOn = UserDefaults.sharedInstance.soundEffects
         musicSettingOn = UserDefaults.sharedInstance.music
         
