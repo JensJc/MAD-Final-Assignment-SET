@@ -31,6 +31,7 @@
 		C99E19C31E290E9200026A2D /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99E19C21E290E9200026A2D /* UserDefaults.swift */; };
 		C9B805561E279536006497B6 /* CardDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B805551E279536006497B6 /* CardDeck.swift */; };
 		C9B805581E27C7CB006497B6 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B805571E27C7CB006497B6 /* Game.swift */; };
+		C9BD32E31E2EC39C00FF62F3 /* SnowFallingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BD32E21E2EC39C00FF62F3 /* SnowFallingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		C99E19C21E290E9200026A2D /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		C9B805551E279536006497B6 /* CardDeck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardDeck.swift; sourceTree = "<group>"; };
 		C9B805571E27C7CB006497B6 /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		C9BD32E21E2EC39C00FF62F3 /* SnowFallingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnowFallingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +182,7 @@
 				C9B805551E279536006497B6 /* CardDeck.swift */,
 				C9B805571E27C7CB006497B6 /* Game.swift */,
 				C99E19C21E290E9200026A2D /* UserDefaults.swift */,
+				C9BD32E21E2EC39C00FF62F3 /* SnowFallingView.swift */,
 			);
 			path = TripleSet;
 			sourceTree = "<group>";
@@ -358,6 +361,7 @@
 				C97732B61E1E8991008247BA /* SettingsTableViewController.swift in Sources */,
 				C97732B01E1E88E0008247BA /* Card.swift in Sources */,
 				C97732821E1E88BE008247BA /* AppDelegate.swift in Sources */,
+				C9BD32E31E2EC39C00FF62F3 /* SnowFallingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -18,6 +18,8 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
     var cardDeckOnTable = [Card?]()
     var selectedCardIndexes = [IndexPath]()
     
+    var snowView: SnowFallingView?
+    
     var score: Int = 0
     var foundSets: Int = 0
     var possibleSets: Int = 0
@@ -120,6 +122,13 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
         super.viewWillAppear(animated)
          
         if musicSettingOn { musicPlayer.playBackgroundMusic(named: Theme.getGameMusic()) }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        cardView.backgroundColor = UIColor.clear
+        
+        if UserDefaults.sharedInstance.theme == Themes.Christmas { addSnowView() }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -391,5 +400,12 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
                         self.cardView.reloadItems(at: [indexPath])
                     }, completion: nil)
         }
+    }
+    
+    func addSnowView() {
+        snowView = SnowFallingView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width * 2, height: view.frame.size.height * 2))
+        view.addSubview(snowView!)
+        view.sendSubview(toBack: snowView!)
+        snowView?.startSnow()
     }
   }

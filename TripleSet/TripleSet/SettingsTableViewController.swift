@@ -19,12 +19,17 @@ struct Themes {
     static let Christmas = 1
 }
 
+struct Images {
+    static let ChristmasTheme = "christmastheme"
+    static let NormalTheme = "normaltheme"
+}
+
 struct Theme {
     static func getBackgroundImage() -> UIImage? {
         if UserDefaults.sharedInstance.theme == Themes.Christmas {
-            return UIImage(named: "christmastheme")
+            return UIImage(named: Images.ChristmasTheme)
         } else {
-            return UIImage(named: "normaltheme")
+            return UIImage(named: Images.NormalTheme)
         }
     }
     
@@ -38,17 +43,17 @@ struct Theme {
     
     static func getGameMusic() -> String {
         if UserDefaults.sharedInstance.theme == Themes.Christmas {
-            return "christmasgamemusic"
+            return Music.GameChristmas
         } else {
-            return "gamemusic"
+            return Music.Game
         }
     }
     
     static func getMenuMusic() -> String {
         if UserDefaults.sharedInstance.theme == Themes.Christmas {
-            return "christmasmenumusic"
+            return Music.MenuChristmas
         } else {
-            return "menumusic"
+            return Music.Menu
         }
     }
 }
@@ -57,6 +62,7 @@ class SettingsTableViewController: UITableViewController {
     // MARK: - Class Variables
     let sections = [SectionTitles.Game, SectionTitles.Sounds, SectionTitles.Themes]
     let musicPlayer = MusicPlayer()
+    var snowView: SnowFallingView?
     
     private struct SectionTitles {
         static let Game = "Game"
@@ -151,10 +157,14 @@ class SettingsTableViewController: UITableViewController {
         case Themes.Normal:
             themeNormalLabel.text = Constants.Activated
             themeChristmasLabel.text = Constants.Deactivated
+            
+            if let sv = snowView { sv.stopSnow() }
             break
         case Themes.Christmas:
             themeNormalLabel.text = Constants.Deactivated
             themeChristmasLabel.text = Constants.Activated
+            
+            if let sv = snowView { sv.startSnow() }
             break
         default: break
         }
@@ -195,6 +205,12 @@ class SettingsTableViewController: UITableViewController {
         if UserDefaults.sharedInstance.music { musicPlayer.playBackgroundMusic(named: Theme.getMenuMusic()) }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if UserDefaults.sharedInstance.theme == Themes.Christmas { addSnowView() }
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         musicPlayer.stop()
@@ -232,5 +248,14 @@ class SettingsTableViewController: UITableViewController {
         
         header.textLabel?.textColor = UIColor.white
         header.tintColor = Theme.getColor()
+    }
+    
+    // MARK: - Animations
+    
+    func addSnowView() {
+        snowView = SnowFallingView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width * 2, height: view.frame.size.height * 2))
+        view.addSubview(snowView!)
+        view.sendSubview(toBack: snowView!)
+        snowView?.startSnow()
     }
 }

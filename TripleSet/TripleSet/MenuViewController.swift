@@ -16,6 +16,7 @@ class MenuViewController: UIViewController {
     @IBOutlet weak var settingsButton: UIButton!
     
     let musicPlayer = MusicPlayer()
+    var snowView: SnowFallingView?
     
     var soundEffectSettingOn = false
     var musicSettingOn = false
@@ -56,6 +57,8 @@ class MenuViewController: UIViewController {
         
         logoAppear()
         
+        if UserDefaults.sharedInstance.theme == Themes.Christmas { addSnowView() }
+        
         soundEffectSettingOn = UserDefaults.sharedInstance.soundEffects
         musicSettingOn = UserDefaults.sharedInstance.music
         
@@ -81,5 +84,12 @@ class MenuViewController: UIViewController {
     
     func logoAppear() {
         UIView.transition(with: logoImage, duration: 1.0, options: UIViewAnimationOptions.transitionFlipFromLeft, animations: {}, completion: nil)
+    }
+    
+    func addSnowView() {
+        snowView = SnowFallingView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width * 2, height: view.frame.size.height * 2))
+        view.addSubview(snowView!)
+        view.sendSubview(toBack: snowView!)
+        snowView?.startSnow()
     }
 }

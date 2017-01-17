@@ -12,6 +12,8 @@ import SceneKit
 class HighScoresViewController: UIViewController {
  
     let musicPlayer = MusicPlayer()
+    var snowView: SnowFallingView?
+    
     @IBOutlet weak var titleLabel: UILabel!
     
     @IBOutlet weak var lastgameLabel: UILabel!
@@ -81,6 +83,12 @@ class HighScoresViewController: UIViewController {
         super.viewWillDisappear(animated)
         musicPlayer.stop()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if UserDefaults.sharedInstance.theme == Themes.Christmas { addSnowView() }
+    }
 
     func setLabelColors() {
         titleLabel.textColor = Theme.getColor()
@@ -100,5 +108,14 @@ class HighScoresViewController: UIViewController {
         overallBestScoreLabel.textColor = Theme.getColor()
         overallBestTimeLabel.textColor = Theme.getColor()
         overallFoundSetsLabel.textColor = Theme.getColor()
+    }
+    
+    // MARK: - Animations
+    
+    func addSnowView() {
+        snowView = SnowFallingView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width * 2, height: view.frame.size.height * 2))
+        view.addSubview(snowView!)
+        view.sendSubview(toBack: snowView!)
+        snowView?.startSnow()
     }
 }

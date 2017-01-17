@@ -8,6 +8,13 @@
 
 import AVFoundation
 
+struct Music {
+    static let Menu = "menumusic"
+    static let MenuChristmas = "christmasmenumusic"
+    static let Game = "gamemusic"
+    static let GameChristmas = "christmasgamemusic"
+}
+
 class MusicPlayer {
     private var backgroundMusicPlayer: AVAudioPlayer?
     private var buttonSoundPlayer: AVAudioPlayer?
