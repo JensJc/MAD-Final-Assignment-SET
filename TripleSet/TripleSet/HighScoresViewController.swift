@@ -72,10 +72,10 @@ class HighScoresViewController: UIViewController {
         musicPlayer.playBackgroundMusic(named: Theme.getMenuMusic())
         
         lastBestScore = "\(UserDefaults.sharedInstance.lastScore)"
-        lastBestTime = "\(round(UserDefaults.sharedInstance.lastTime))s"
+        lastBestTime = "\(convertSecondsToHoursMinutesString(seconds: UserDefaults.sharedInstance.lastTime))"
         lastFoundSets = "\(UserDefaults.sharedInstance.lastFoundSets)"
         overallBestScore = "\(UserDefaults.sharedInstance.overallScore)"
-        overallBestTime = "\(round(UserDefaults.sharedInstance.overallTime))s"
+        overallBestTime = "\(convertSecondsToHoursMinutesString(seconds: UserDefaults.sharedInstance.overallTime))"
         overallFoundSets = "\(UserDefaults.sharedInstance.overallFoundSets)"
     }
     
@@ -109,6 +109,33 @@ class HighScoresViewController: UIViewController {
         overallBestTimeLabel.textColor = Theme.getColor()
         overallFoundSetsLabel.textColor = Theme.getColor()
     }
+    
+    // MARK: - Time formatting
+    
+    func secondsToHoursMinutesSeconds (seconds : Double) -> (Int, Int, Int) {
+        let hours = Int(seconds / 3600)
+        let minutes = Int((seconds.truncatingRemainder(dividingBy: 3600)) / 60)
+        let seconds = Int(seconds.truncatingRemainder(dividingBy: 60))
+        return (hours, minutes, seconds)
+    }
+    
+    func secondsToHoursMinutes (seconds : Double) -> (Int, Int) {
+        let hours = Int(seconds / 3600)
+        let minutes = Int((seconds.truncatingRemainder(dividingBy: 3600)) / 60)
+        return (hours, minutes)
+    }
+    
+    func convertSecondsToHoursMinutesString (seconds:Double) -> String {
+        let (hours, minutes) = secondsToHoursMinutes (seconds: seconds)
+        
+        return "\(timeText(from: hours)):\(timeText(from: minutes))"
+    }
+    
+    private func timeText(from number: Int) -> String {
+        return number < 10 ? "0\(number)" : "\(number)"
+    }
+    
+    
     
     // MARK: - Animations
     
