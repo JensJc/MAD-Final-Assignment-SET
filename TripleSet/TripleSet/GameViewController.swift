@@ -228,6 +228,8 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
             
              UIView.transition(with: self.view, duration: 1.0, options: UIViewAnimationOptions.transitionFlipFromLeft, animations: {}, completion: nil)
             self.startGame()
+            self.score = 0
+            self.foundSets = 0
             self.cardView.reloadData()
         }
         
@@ -246,7 +248,7 @@ class GameViewController: UIViewController, UICollectionViewDataSource, UICollec
             UserDefaults.sharedInstance.overallScore = score
         }
         
-        if time < UserDefaults.sharedInstance.overallTime || time == 0.0 {
+        if time < UserDefaults.sharedInstance.overallTime || UserDefaults.sharedInstance.overallTime == 0.0 {
             UserDefaults.sharedInstance.overallTime = time
         }
         
